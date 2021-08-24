@@ -37,7 +37,7 @@ pub const MAX_APP_NUM: usize = 8
 
 虚存模块太多的地方使用了 `unwrap`, 大部分可能的错误都没有处理。
 
-> 让同学们自己处理有没有问题？
+http://blog.hubwiz.com/2020/06/15/rust-result-option-unwrap-question/
 
 #### ch5
 
