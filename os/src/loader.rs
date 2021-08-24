@@ -56,5 +56,5 @@ pub fn list_apps() {
     for app in APP_NAMES.iter() {
         println!("{}", app);
     }
-    println!("**************/")
+    println!("**************/");
 }
