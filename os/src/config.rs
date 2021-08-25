@@ -15,11 +15,3 @@ pub fn kernel_stack_position(app_id: usize) -> (usize, usize) {
 }
 pub const CLOCK_FREQ: usize = 12500000;
 
-// 可用于在函数间传递错误
-#[allow(dead_code)]
-pub type Result<T> = core::result::Result<T, Error>;
-
-#[derive(Debug, PartialEq, Eq)]
-pub enum Error {
-    // List your errors here
-}
