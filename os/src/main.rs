@@ -3,10 +3,14 @@
 #![feature(global_asm)]
 #![feature(asm)]
 #![feature(panic_info_message)]
+#![feature(alloc_error_handler)]
+
+extern crate alloc;
 
 #[macro_use]
 mod console;
 mod config;
+mod heap_alloc;
 mod lang_items;
 mod loader;
 mod logging;
@@ -36,6 +40,7 @@ pub fn rust_main() -> ! {
     clear_bss();
     logging::init();
     println!("[kernel] Hello, world!");
+    heap_alloc::init_heap();
     trap::init();
     loader::load_apps();
     trap::enable_timer_interrupt();
