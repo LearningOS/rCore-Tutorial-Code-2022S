@@ -13,10 +13,11 @@ static TESTS: &[&str] = &[
     "matrix\0",
     "stack_overflow\0",
     "yield\0",
-    // 正确实现 sys_get_time 后这三个程序才能运行
+    // 正确实现 sys_get_time 后这些程序才能运行
     // "forktest2\0",
     // "sleep\0",
     // "sleep_simple\0",
+    // "forktree\0",
 ];
 
 use user_lib::{exec, fork, waitpid};
