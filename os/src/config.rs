@@ -9,11 +9,3 @@ pub const TRAMPOLINE: usize = usize::MAX - PAGE_SIZE + 1;
 pub const TRAP_CONTEXT: usize = TRAMPOLINE - PAGE_SIZE;
 pub const CLOCK_FREQ: usize = 12500000;
 
-// 可用于在函数间传递错误
-#[allow(dead_code)]
-pub type Result<T> = core::result::Result<T, Error>;
-
-#[derive(Debug, PartialEq, Eq)]
-pub enum Error {
-    // List your errors here
-}
