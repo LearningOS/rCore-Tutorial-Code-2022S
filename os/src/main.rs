@@ -4,7 +4,7 @@
 #![feature(asm)]
 #![feature(panic_info_message)]
 
-use log::info;
+use log::*;
 
 #[macro_use]
 mod console;
@@ -39,13 +39,13 @@ pub fn rust_main() -> ! {
     clear_bss();
     logging::init();
     println!("Hello, world!");
-    info!(".text [{:#x}, {:#x})", stext as usize, etext as usize);
-    info!(".rodata [{:#x}, {:#x})", srodata as usize, erodata as usize);
+    trace!(".text [{:#x}, {:#x})", stext as usize, etext as usize);
+    debug!(".rodata [{:#x}, {:#x})", srodata as usize, erodata as usize);
     info!(".data [{:#x}, {:#x})", sdata as usize, edata as usize);
-    info!(
+    warn!(
         "boot_stack [{:#x}, {:#x})",
         boot_stack as usize, boot_stack_top as usize
     );
-    info!(".bss [{:#x}, {:#x})", sbss as usize, ebss as usize);
+    error!(".bss [{:#x}, {:#x})", sbss as usize, ebss as usize);
     panic!("Shutdown machine!");
 }
