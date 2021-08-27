@@ -1,5 +1,5 @@
 #![no_std]
-#![feature(llvm_asm)]
+#![feature(asm)]
 #![feature(linkage)]
 #![feature(panic_info_message)]
 #![feature(alloc_error_handler)]
@@ -57,7 +57,7 @@ bitflags! {
 }
 
 #[repr(C)]
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct TimeVal {
     pub sec: usize,
     pub usec: usize,
@@ -65,7 +65,7 @@ pub struct TimeVal {
 
 impl TimeVal {
     pub fn new() -> Self {
-        TimeVal { sec: 0, usec: 0 }
+        Self::default()
     }
 }
 
@@ -93,6 +93,12 @@ impl Stat {
             nlink: 0,
             pad: [0; 7],
         }
+    }
+}
+
+impl Default for Stat {
+    fn default() -> Self {
+        Self::new()
     }
 }
 
@@ -225,5 +231,9 @@ pub fn spawn(path: &str) -> isize {
     sys_spawn(path)
 }
 
-pub fn dup(fd: usize) -> isize { sys_dup(fd) }
-pub fn pipe(pipe_fd: &mut [usize]) -> isize { sys_pipe(pipe_fd) }
+pub fn dup(fd: usize) -> isize {
+    sys_dup(fd)
+}
+pub fn pipe(pipe_fd: &mut [usize]) -> isize {
+    sys_pipe(pipe_fd)
+}

@@ -1,6 +1,6 @@
 #![no_std]
 #![no_main]
-#![feature(llvm_asm)]
+#![feature(asm)]
 
 #[macro_use]
 extern crate user_lib;
@@ -15,7 +15,7 @@ const STACK_SIZE: usize = 0x1000;
 
 unsafe fn r_sp() -> usize {
     let mut sp: usize;
-    llvm_asm!("mv $0, sp": "=r"(sp) ::: "volatile");
+    asm!("mv {}, sp", out(reg) sp);
     sp
 }
 
@@ -26,18 +26,25 @@ unsafe fn stack_range() -> (usize, usize) {
 }
 
 #[no_mangle]
-pub unsafe fn main() -> i32 {
+pub fn main() -> i32 {
     assert_eq!(
-        write(STDOUT, slice::from_raw_parts(0x0 as *const _, 10)),
+        write(STDOUT, unsafe {
+            #[allow(clippy::zero_ptr)]
+            slice::from_raw_parts(0x0 as *const _, 10)
+        }),
         -1
     );
-    let (bottom, top) = stack_range();
+    let (bottom, top) = unsafe { stack_range() };
     assert_eq!(
-        write(STDOUT, slice::from_raw_parts((top - 5) as *const _, 10)),
+        write(STDOUT, unsafe {
+            slice::from_raw_parts((top - 5) as *const _, 10)
+        }),
         -1
     );
     assert_eq!(
-        write(STDOUT, slice::from_raw_parts((bottom - 5) as *const _, 10)),
+        write(STDOUT, unsafe {
+            slice::from_raw_parts((bottom - 5) as *const _, 10)
+        }),
         -1
     );
     // TODO: test string located in .data section

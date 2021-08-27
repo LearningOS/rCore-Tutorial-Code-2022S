@@ -26,11 +26,12 @@ pub const SYSCALL_PIPE: usize = 59;
 pub fn syscall(id: usize, args: [usize; 3]) -> isize {
     let mut ret: isize;
     unsafe {
-        llvm_asm!("ecall"
-            : "={x10}" (ret)
-            : "{x10}" (args[0]), "{x11}" (args[1]), "{x12}" (args[2]), "{x17}" (id)
-            : "memory"
-            : "volatile"
+        asm!(
+            "ecall",
+            inlateout("x10") args[0] => ret,
+            in("x11") args[1],
+            in("x12") args[2],
+            in("x17") id
         );
     }
     ret
@@ -39,12 +40,15 @@ pub fn syscall(id: usize, args: [usize; 3]) -> isize {
 pub fn syscall6(id: usize, args: [usize; 6]) -> isize {
     let mut ret: isize;
     unsafe {
-        llvm_asm!("ecall"
-            : "={x10}" (ret)
-            : "{x10}" (args[0]), "{x11}" (args[1]), "{x12}" (args[2]), "{x13}" (args[3]),
-                "{x14}" (args[4]), "{x15}" (args[5]), "{x17}" (id)
-            : "memory"
-            : "volatile"
+        asm!(
+            "ecall",
+            inlateout("x10") args[0] => ret,
+            in("x11") args[1],
+            in("x12") args[2],
+            in("x13") args[3],
+            in("x14") args[4],
+            in("x15") args[5],
+            in("x17") id
         );
     }
     ret
