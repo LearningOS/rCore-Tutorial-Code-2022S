@@ -5,10 +5,12 @@
 #![feature(panic_info_message)]
 #![feature(alloc_error_handler)]
 
-extern crate alloc;
-
 #[macro_use]
 extern crate bitflags;
+#[macro_use]
+extern crate log;
+
+extern crate alloc;
 
 #[macro_use]
 mod console;
@@ -46,7 +48,7 @@ pub fn rust_main() -> ! {
     mm::init();
     mm::remap_test();
     task::add_initproc();
-    println!("after initproc!");
+    info!("after initproc!");
     trap::init();
     trap::enable_timer_interrupt();
     timer::set_next_trigger();

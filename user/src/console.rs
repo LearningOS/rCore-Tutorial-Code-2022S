@@ -33,10 +33,8 @@ impl Write for ConsoleBuffer {
     fn write_str(&mut self, s: &str) -> fmt::Result {
         for c in s.as_bytes().iter() {
             self.0.push_back(*c);
-            if *c == '\n' as u8 || self.0.len() == CONSOLE_BUFFER_SIZE {
-                if -1 == self.flush() {
-                    return Err(fmt::Error);
-                }
+            if (*c == b'\n' || self.0.len() == CONSOLE_BUFFER_SIZE) && -1 == self.flush() {
+                return Err(fmt::Error);
             }
         }
         Ok(())
@@ -60,6 +58,9 @@ macro_rules! print {
 
 #[macro_export]
 macro_rules! println {
+    () => {
+        $crate::console::print(format_args!("\n"));
+    };
     ($fmt: literal $(, $($arg: tt)+)?) => {
         $crate::console::print(format_args!(concat!($fmt, "\n") $(, $($arg)+)?));
     }

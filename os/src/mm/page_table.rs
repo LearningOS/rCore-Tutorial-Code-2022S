@@ -74,11 +74,11 @@ impl PageTable {
         }
     }
     fn find_pte_create(&mut self, vpn: VirtPageNum) -> Option<&mut PageTableEntry> {
-        let idxs = vpn.indexes();
+        let mut idxs = vpn.indexes();
         let mut ppn = self.root_ppn;
         let mut result: Option<&mut PageTableEntry> = None;
-        for i in 0..3 {
-            let pte = &mut ppn.get_pte_array()[idxs[i]];
+        for (i, idx) in idxs.iter_mut().enumerate() {
+            let pte = &mut ppn.get_pte_array()[*idx];
             if i == 2 {
                 result = Some(pte);
                 break;
@@ -96,8 +96,8 @@ impl PageTable {
         let idxs = vpn.indexes();
         let mut ppn = self.root_ppn;
         let mut result: Option<&PageTableEntry> = None;
-        for i in 0..3 {
-            let pte = &ppn.get_pte_array()[idxs[i]];
+        for (i, idx) in idxs.iter().enumerate() {
+            let pte = &ppn.get_pte_array()[*idx];
             if i == 2 {
                 result = Some(pte);
                 break;
@@ -122,7 +122,7 @@ impl PageTable {
         *pte = PageTableEntry::empty();
     }
     pub fn translate(&self, vpn: VirtPageNum) -> Option<PageTableEntry> {
-        self.find_pte(vpn).map(|pte| pte.clone())
+        self.find_pte(vpn).copied()
     }
     pub fn translate_va(&self, va: VirtAddr) -> Option<PhysAddr> {
         self.find_pte(va.clone().floor()).map(|pte| {

@@ -87,14 +87,14 @@ impl MemorySet {
         // map trampoline
         memory_set.map_trampoline();
         // map kernel sections
-        println!(".text [{:#x}, {:#x})", stext as usize, etext as usize);
-        println!(".rodata [{:#x}, {:#x})", srodata as usize, erodata as usize);
-        println!(".data [{:#x}, {:#x})", sdata as usize, edata as usize);
-        println!(
+        info!(".text [{:#x}, {:#x})", stext as usize, etext as usize);
+        info!(".rodata [{:#x}, {:#x})", srodata as usize, erodata as usize);
+        info!(".data [{:#x}, {:#x})", sdata as usize, edata as usize);
+        info!(
             ".bss [{:#x}, {:#x})",
             sbss_with_stack as usize, ebss as usize
         );
-        println!("mapping .text section");
+        info!("mapping .text section");
         memory_set.push(
             MapArea::new(
                 (stext as usize).into(),
@@ -104,7 +104,7 @@ impl MemorySet {
             ),
             None,
         );
-        println!("mapping .rodata section");
+        info!("mapping .rodata section");
         memory_set.push(
             MapArea::new(
                 (srodata as usize).into(),
@@ -114,7 +114,7 @@ impl MemorySet {
             ),
             None,
         );
-        println!("mapping .data section");
+        info!("mapping .data section");
         memory_set.push(
             MapArea::new(
                 (sdata as usize).into(),
@@ -124,7 +124,7 @@ impl MemorySet {
             ),
             None,
         );
-        println!("mapping .bss section");
+        info!("mapping .bss section");
         memory_set.push(
             MapArea::new(
                 (sbss_with_stack as usize).into(),
@@ -134,7 +134,7 @@ impl MemorySet {
             ),
             None,
         );
-        println!("mapping physical memory");
+        info!("mapping physical memory");
         memory_set.push(
             MapArea::new(
                 (ekernel as usize).into(),
@@ -295,7 +295,9 @@ impl MapArea {
         let pte_flags = PTEFlags::from_bits(self.map_perm.bits).unwrap();
         page_table.map(vpn, ppn, pte_flags);
     }
+
     pub fn unmap_one(&mut self, page_table: &mut PageTable, vpn: VirtPageNum) {
+        #[allow(clippy::single_match)]
         match self.map_type {
             MapType::Framed => {
                 self.data_frames.remove(&vpn);
@@ -359,29 +361,20 @@ pub fn remap_test() {
     let mid_text: VirtAddr = ((stext as usize + etext as usize) / 2).into();
     let mid_rodata: VirtAddr = ((srodata as usize + erodata as usize) / 2).into();
     let mid_data: VirtAddr = ((sdata as usize + edata as usize) / 2).into();
-    assert_eq!(
-        kernel_space
-            .page_table
-            .translate(mid_text.floor())
-            .unwrap()
-            .writable(),
-        false
-    );
-    assert_eq!(
-        kernel_space
-            .page_table
-            .translate(mid_rodata.floor())
-            .unwrap()
-            .writable(),
-        false,
-    );
-    assert_eq!(
-        kernel_space
-            .page_table
-            .translate(mid_data.floor())
-            .unwrap()
-            .executable(),
-        false,
-    );
-    println!("remap_test passed!");
+    assert!(!kernel_space
+        .page_table
+        .translate(mid_text.floor())
+        .unwrap()
+        .writable());
+    assert!(!kernel_space
+        .page_table
+        .translate(mid_rodata.floor())
+        .unwrap()
+        .writable());
+    assert!(!kernel_space
+        .page_table
+        .translate(mid_data.floor())
+        .unwrap()
+        .executable());
+    info!("remap_test passed!");
 }

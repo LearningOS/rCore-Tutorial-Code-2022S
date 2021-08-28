@@ -27,6 +27,7 @@ fn work(times: isize) {
         for i in 0..N {
             for j in 0..N {
                 c[i][j] = 0;
+                #[allow(clippy::needless_range_loop)]
                 for k in 0..N {
                     c[i][j] = (c[i][j] + a[i][k] * b[k][j]) % P;
                 }

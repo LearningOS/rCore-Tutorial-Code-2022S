@@ -57,7 +57,7 @@ bitflags! {
 }
 
 #[repr(C)]
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct TimeVal {
     pub sec: usize,
     pub usec: usize,
@@ -65,7 +65,7 @@ pub struct TimeVal {
 
 impl TimeVal {
     pub fn new() -> Self {
-        TimeVal { sec: 0, usec: 0 }
+        Self::default()
     }
 }
 
@@ -93,6 +93,12 @@ impl Stat {
             nlink: 0,
             pad: [0; 7],
         }
+    }
+}
+
+impl Default for Stat {
+    fn default() -> Self {
+        Self::new()
     }
 }
 

@@ -25,7 +25,7 @@ pub fn main() -> i32 {
         let c = getchar();
         match c {
             LF | CR => {
-                println!("");
+                println!();
                 if !line.is_empty() {
                     line.push('\0');
                     let pid = fork();

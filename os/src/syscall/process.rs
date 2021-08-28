@@ -15,6 +15,7 @@ pub struct TimeVal {
 }
 
 pub fn sys_exit(exit_code: i32) -> ! {
+    debug!("[kernel] Application exited with code {}", exit_code);
     exit_current_and_run_next(exit_code);
     panic!("Unreachable in sys_exit!");
 }
@@ -62,11 +63,10 @@ pub fn sys_waitpid(pid: isize, exit_code_ptr: *mut i32) -> isize {
 
     // ---- access current TCB exclusively
     let mut inner = task.inner_exclusive_access();
-    if inner
+    if !inner
         .children
         .iter()
-        .find(|p| pid == -1 || pid as usize == p.getpid())
-        .is_none()
+        .any(|p| pid == -1 || pid as usize == p.getpid())
     {
         return -1;
         // ---- release current PCB
