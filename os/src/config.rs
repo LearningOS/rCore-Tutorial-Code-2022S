@@ -13,4 +13,5 @@ pub fn kernel_stack_position(app_id: usize) -> (usize, usize) {
     let bottom = top - KERNEL_STACK_SIZE;
     (bottom, top)
 }
+
 pub const CLOCK_FREQ: usize = 12500000;

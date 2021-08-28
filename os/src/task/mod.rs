@@ -25,9 +25,9 @@ struct TaskManagerInner {
 
 lazy_static! {
     pub static ref TASK_MANAGER: TaskManager = {
-        println!("init TASK_MANAGER");
+        info!("init TASK_MANAGER");
         let num_app = get_num_app();
-        println!("num_app = {}", num_app);
+        info!("num_app = {}", num_app);
         let mut tasks: Vec<TaskControlBlock> = Vec::new();
         for i in 0..num_app {
             tasks.push(TaskControlBlock::new(get_app_data(i), i));
@@ -61,14 +61,14 @@ impl TaskManager {
 
     fn mark_current_suspended(&self) {
         let mut inner = self.inner.exclusive_access();
-        let cur = inner.current_task;
-        inner.tasks[cur].task_status = TaskStatus::Ready;
+        let current = inner.current_task;
+        inner.tasks[current].task_status = TaskStatus::Ready;
     }
 
     fn mark_current_exited(&self) {
         let mut inner = self.inner.exclusive_access();
-        let cur = inner.current_task;
-        inner.tasks[cur].task_status = TaskStatus::Exited;
+        let current = inner.current_task;
+        inner.tasks[current].task_status = TaskStatus::Exited;
     }
 
     fn find_next_task(&self) -> Option<usize> {

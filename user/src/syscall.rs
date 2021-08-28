@@ -40,7 +40,8 @@ pub fn syscall(id: usize, args: [usize; 3]) -> isize {
 pub fn syscall6(id: usize, args: [usize; 6]) -> isize {
     let mut ret: isize;
     unsafe {
-        asm!("ecall",
+        asm!(
+            "ecall",
             inlateout("x10") args[0] => ret,
             in("x11") args[1],
             in("x12") args[2],

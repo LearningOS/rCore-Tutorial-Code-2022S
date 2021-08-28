@@ -50,11 +50,11 @@ pub fn trap_handler() -> ! {
         Trap::Exception(Exception::StoreFault)
         | Trap::Exception(Exception::StorePageFault)
         | Trap::Exception(Exception::LoadPageFault) => {
-            println!("[kernel] PageFault in application, bad addr = {:#x}, bad instruction = {:#x}, core dumped.", stval, cx.sepc);
+            error!("[kernel] PageFault in application, bad addr = {:#x}, bad instruction = {:#x}, core dumped.", stval, cx.sepc);
             exit_current_and_run_next();
         }
         Trap::Exception(Exception::IllegalInstruction) => {
-            println!("[kernel] IllegalInstruction in application, core dumped.");
+            error!("[kernel] IllegalInstruction in application, core dumped.");
             exit_current_and_run_next();
         }
         Trap::Interrupt(Interrupt::SupervisorTimer) => {
