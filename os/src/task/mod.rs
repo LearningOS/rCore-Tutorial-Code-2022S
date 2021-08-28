@@ -1,5 +1,6 @@
 mod context;
 mod switch;
+#[allow(clippy::module_inception)]
 mod task;
 
 use crate::loader::{get_app_data, get_num_app};
@@ -83,6 +84,7 @@ impl TaskManager {
         inner.tasks[inner.current_task].get_user_token()
     }
 
+    #[allow(clippy::mut_from_ref)]
     fn get_current_trap_cx(&self) -> &mut TrapContext {
         let inner = self.inner.exclusive_access();
         inner.tasks[inner.current_task].get_trap_cx()
