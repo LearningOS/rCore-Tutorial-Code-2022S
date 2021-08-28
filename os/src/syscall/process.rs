@@ -19,7 +19,6 @@ pub fn sys_yield() -> isize {
     0
 }
 
-
 // YOUR JOB: 引入虚地址后重写 sys_get_time
 pub fn sys_get_time(_ts: *mut TimeVal, _tz: usize) -> isize {
     let _us = get_time_us();
