@@ -119,6 +119,7 @@ pub fn sys_munmap(_start: usize, _len: usize) -> isize {
 }
 
 // YOUR JOB: 实现 sys_spawn 系统调用
+// ALERT: 注意在实现 SPAWN 时不需要复制父进程地址空间，SPAWN != FORK + EXEC 
 pub fn sys_spawn(_path: *const u8) -> isize {
     -1
 }

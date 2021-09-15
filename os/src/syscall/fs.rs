@@ -5,7 +5,6 @@ use crate::task::{current_user_token, suspend_current_and_run_next};
 const FD_STDIN: usize = 0;
 const FD_STDOUT: usize = 1;
 
-// YOUR JOB: 修改 sys_write 使之通过 ch2 测试
 pub fn sys_write(fd: usize, buf: *const u8, len: usize) -> isize {
     match fd {
         FD_STDOUT => {

@@ -5,7 +5,6 @@
 extern crate user_lib;
 
 static TESTS: &[&str] = &[
-    "test_write1\0",
     "test_sleep\0",
     "test_sleep1\0",
     "test_mmap0\0",
