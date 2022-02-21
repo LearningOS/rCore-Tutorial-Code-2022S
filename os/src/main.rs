@@ -1,7 +1,5 @@
 #![no_std]
 #![no_main]
-#![feature(global_asm)]
-#![feature(asm)]
 #![feature(panic_info_message)]
 
 use log::*;
@@ -12,7 +10,7 @@ mod lang_items;
 mod logging;
 mod sbi;
 
-global_asm!(include_str!("entry.asm"));
+core::arch::global_asm!(include_str!("entry.asm"));
 
 fn clear_bss() {
     extern "C" {
