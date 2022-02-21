@@ -12,7 +12,7 @@ use riscv::register::{
     sie, stval, stvec,
 };
 
-global_asm!(include_str!("trap.S"));
+core::arch::global_asm!(include_str!("trap.S"));
 
 pub fn init() {
     set_kernel_trap_entry();
@@ -83,7 +83,7 @@ pub fn trap_return() -> ! {
     }
     let restore_va = __restore as usize - __alltraps as usize + TRAMPOLINE;
     unsafe {
-        asm!(
+        core::arch::asm!(
             "fence.i",
             "jr {restore_va}",
             restore_va = in(reg) restore_va,

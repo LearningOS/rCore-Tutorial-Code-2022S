@@ -1,7 +1,5 @@
 #![no_std]
 #![no_main]
-#![feature(global_asm)]
-#![feature(asm)]
 #![feature(panic_info_message)]
 #![feature(alloc_error_handler)]
 
@@ -26,8 +24,8 @@ mod task;
 mod timer;
 mod trap;
 
-global_asm!(include_str!("entry.asm"));
-global_asm!(include_str!("link_app.S"));
+core::arch::global_asm!(include_str!("entry.asm"));
+core::arch::global_asm!(include_str!("link_app.S"));
 
 fn clear_bss() {
     extern "C" {
