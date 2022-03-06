@@ -1,6 +1,8 @@
 #![no_std]
 #![no_main]
 #![feature(panic_info_message)]
+#![feature(asm)]
+#![feature(global_asm)]
 
 use log::*;
 
