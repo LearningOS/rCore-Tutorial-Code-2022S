@@ -11,7 +11,7 @@ fn panic(info: &PanicInfo) -> ! {
             info.message().unwrap()
         );
     } else {
-        println!("Panicked: {}", info.message().unwrap());
+        println!("[kernel] Panicked: {}", info.message().unwrap());
     }
     shutdown()
 }

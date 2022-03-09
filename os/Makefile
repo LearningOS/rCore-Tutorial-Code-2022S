@@ -25,8 +25,6 @@ build: env $(KERNEL_BIN)
 
 $(KERNEL_BIN): kernel
 	@$(OBJCOPY) $(KERNEL_ELF) --strip-all -O binary $@
-
-disasm:
 	@$(OBJDUMP) $(KERNEL_ELF) -S > $(KERNEL_ELF).asm
 
 env:
@@ -34,6 +32,9 @@ env:
 	cargo install cargo-binutils --vers ~0.2
 	rustup component add rust-src
 	rustup component add llvm-tools-preview
+
+$(KERNEL_BIN): kernel
+	@$(OBJCOPY) $(KERNEL_ELF) --strip-all -O binary $@
 
 kernel:
 	@make -C ../user build TEST=$(TEST) CHAPTER=$(CHAPTER) BASE=$(BASE)

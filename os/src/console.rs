@@ -1,9 +1,3 @@
-/*！
-
-本模块实现了 print 和 println 宏。
-
-*/
-
 use crate::sbi::console_putchar;
 use core::fmt::{self, Write};
 
