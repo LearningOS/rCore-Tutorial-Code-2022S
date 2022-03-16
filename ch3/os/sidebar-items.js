@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["clear_bss",""],["rust_main",""]],"macro":[["print",""],["println",""]],"mod":[["config",""],["console",""],["heap_alloc",""],["lang_items",""],["loader",""],["logging",""],["sbi",""],["sync",""],["syscall",""],["task",""],["timer",""],["trap",""]]});
