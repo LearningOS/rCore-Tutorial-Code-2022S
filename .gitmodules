@@ -1,4 +1,0 @@
-
-[submodule "user"]
-	path = user
-	url = https://github.com/LearningOS/rCore-Tutorial-Test-2022S.git
