@@ -18,12 +18,14 @@
 <span id="13">13</span>
 <span id="14">14</span>
 <span id="15">15</span>
+<span id="16">16</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident"><span class="kw">super</span>::TaskContext</span>;
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TaskControlBlock</span> {
     <span class="kw">pub</span> <span class="ident">task_status</span>: <span class="ident">TaskStatus</span>,
     <span class="kw">pub</span> <span class="ident">task_cx</span>: <span class="ident">TaskContext</span>,
+    <span class="comment">// LAB1: Add whatever you need about the Task.</span>
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>)]</span>

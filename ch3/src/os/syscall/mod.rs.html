@@ -26,6 +26,7 @@
 <span id="21">21</span>
 <span id="22">22</span>
 <span id="23">23</span>
+<span id="24">24</span>
 </pre><pre class="rust"><code><span class="kw">const</span> <span class="ident">SYSCALL_WRITE</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">64</span>;
 <span class="kw">const</span> <span class="ident">SYSCALL_EXIT</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">93</span>;
 <span class="kw">const</span> <span class="ident">SYSCALL_YIELD</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">124</span>;
@@ -40,6 +41,7 @@
 
 <span class="doccomment">/// handle syscall exception with `syscall_id` and other arguments</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">syscall</span>(<span class="ident">syscall_id</span>: <span class="ident">usize</span>, <span class="ident">args</span>: [<span class="ident">usize</span>; <span class="number">3</span>]) -&gt; <span class="ident">isize</span> {
+    <span class="comment">// LAB1: You may need to update syscall info here.</span>
     <span class="kw">match</span> <span class="ident">syscall_id</span> {
         <span class="ident">SYSCALL_WRITE</span> =&gt; <span class="ident">sys_write</span>(<span class="ident">args</span>[<span class="number">0</span>], <span class="ident">args</span>[<span class="number">1</span>] <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">u8</span>, <span class="ident">args</span>[<span class="number">2</span>]),
         <span class="ident">SYSCALL_EXIT</span> =&gt; <span class="ident">sys_exit</span>(<span class="ident">args</span>[<span class="number">0</span>] <span class="kw">as</span> <span class="ident">i32</span>),

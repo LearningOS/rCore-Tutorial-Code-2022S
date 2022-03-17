@@ -145,6 +145,11 @@
 <span id="140">140</span>
 <span id="141">141</span>
 <span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
 </pre><pre class="rust"><code><span class="kw">mod</span> <span class="ident">context</span>;
 <span class="kw">mod</span> <span class="ident">switch</span>;
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::module_inception</span>)]</span>
@@ -229,7 +234,7 @@
         <span class="ident">inner</span>.<span class="ident">tasks</span>[<span class="ident">current</span>].<span class="ident">task_status</span> <span class="op">=</span> <span class="ident">TaskStatus::Exited</span>;
     }
 
-    <span class="doccomment">/// Find next task to run and return app id.</span>
+    <span class="doccomment">/// Find next task to run and return task id.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// In this case, we only return the first `Ready` task in task list.</span>
     <span class="kw">fn</span> <span class="ident">find_next_task</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
@@ -260,6 +265,8 @@
             <span class="macro">panic!</span>(<span class="string">&quot;All applications completed!&quot;</span>);
         }
     }
+
+    <span class="comment">// LAB1: Try to implement your function to update or get task info!</span>
 }
 
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">run_first_task</span>() {
@@ -287,6 +294,9 @@
     <span class="ident">mark_current_exited</span>();
     <span class="ident">run_next_task</span>();
 }
+
+<span class="comment">// LAB1: Public functions implemented here provide interfaces.</span>
+<span class="comment">// You may use TASK_MANAGER member functions to handle requests.</span>
 </code></pre></div>
 </section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="os" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.61.0-nightly (03a8cc7df 2022-02-21)" ></div>
 </body></html>
