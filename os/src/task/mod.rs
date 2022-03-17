@@ -82,7 +82,7 @@ impl TaskManager {
         inner.tasks[current].task_status = TaskStatus::Exited;
     }
 
-    /// Find next task to run and return app id.
+    /// Find next task to run and return task id.
     ///
     /// In this case, we only return the first `Ready` task in task list.
     fn find_next_task(&self) -> Option<usize> {
@@ -113,6 +113,8 @@ impl TaskManager {
             panic!("All applications completed!");
         }
     }
+
+    // LAB1: Try to implement your function to update or get task info!
 }
 
 pub fn run_first_task() {
@@ -140,3 +142,6 @@ pub fn exit_current_and_run_next() {
     mark_current_exited();
     run_next_task();
 }
+
+// LAB1: Public functions implemented here provide interfaces.
+// You may use TASK_MANAGER member functions to handle requests.
