@@ -11,7 +11,7 @@ pub struct TimeVal {
 
 pub struct TaskInfo {
     status: TaskStatus,
-    syscall_times: [usize; MAX_SYSCALL_NUM],
+    syscall_times: [u32; MAX_SYSCALL_NUM],
     time: usize,
 }
 
