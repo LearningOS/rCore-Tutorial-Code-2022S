@@ -62,7 +62,7 @@
 
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TaskInfo</span> {
     <span class="ident">status</span>: <span class="ident">TaskStatus</span>,
-    <span class="ident">syscall_times</span>: [<span class="ident">usize</span>; <span class="ident">MAX_SYSCALL_NUM</span>],
+    <span class="ident">syscall_times</span>: [<span class="ident">u32</span>; <span class="ident">MAX_SYSCALL_NUM</span>],
     <span class="ident">time</span>: <span class="ident">usize</span>,
 }
 
