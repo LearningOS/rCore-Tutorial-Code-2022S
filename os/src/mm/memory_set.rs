@@ -24,10 +24,12 @@ extern "C" {
 }
 
 lazy_static! {
+    /// a memory set instance through lazy_static! managing kernel space
     pub static ref KERNEL_SPACE: Arc<Mutex<MemorySet>> =
         Arc::new(Mutex::new(MemorySet::new_kernel()));
 }
 
+/// memory set structure, controls virtual-memory space
 pub struct MemorySet {
     page_table: PageTable,
     areas: Vec<MapArea>,
@@ -215,6 +217,7 @@ impl MemorySet {
     }
 }
 
+/// map area structure, controls a contiguous piece of virtual memory
 pub struct MapArea {
     vpn_range: VPNRange,
     data_frames: BTreeMap<VirtPageNum, FrameTracker>,
@@ -300,12 +303,14 @@ impl MapArea {
 }
 
 #[derive(Copy, Clone, PartialEq, Debug)]
+/// map type for memory set: identical or framed
 pub enum MapType {
     Identical,
     Framed,
 }
 
 bitflags! {
+    /// map permission corresponding to that in pte: `R W X U`
     pub struct MapPermission: u8 {
         const R = 1 << 1;
         const W = 1 << 2;

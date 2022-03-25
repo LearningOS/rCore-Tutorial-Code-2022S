@@ -49,7 +49,7 @@ struct TaskManagerInner {
 }
 
 lazy_static! {
-    /// 'TaskManager' instance through lazy_static!
+    /// a 'TaskManager' instance through lazy_static!
     pub static ref TASK_MANAGER: TaskManager = {
         info!("init TASK_MANAGER");
         let num_app = get_num_app();
@@ -114,12 +114,14 @@ impl TaskManager {
             .find(|id| inner.tasks[*id].task_status == TaskStatus::Ready)
     }
 
+    /// Get the current 'Running' task's token.
     fn get_current_token(&self) -> usize {
         let inner = self.inner.exclusive_access();
         inner.tasks[inner.current_task].get_user_token()
     }
 
     #[allow(clippy::mut_from_ref)]
+    /// Get the current 'Running' task's trap contexts.
     fn get_current_trap_cx(&self) -> &mut TrapContext {
         let inner = self.inner.exclusive_access();
         inner.tasks[inner.current_task].get_trap_cx()
@@ -180,10 +182,12 @@ pub fn exit_current_and_run_next() {
     run_next_task();
 }
 
+/// Get the current 'Running' task's token.
 pub fn current_user_token() -> usize {
     TASK_MANAGER.get_current_token()
 }
 
+/// Get the current 'Running' task's trap contexts.
 pub fn current_trap_cx() -> &'static mut TrapContext {
     TASK_MANAGER.get_current_trap_cx()
 }
