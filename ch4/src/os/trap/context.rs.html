@@ -42,11 +42,13 @@
 <span id="37">37</span>
 <span id="38">38</span>
 <span id="39">39</span>
+<span id="40">40</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Implementation of [`TrapContext`]</span>
 
 <span class="kw">use</span> <span class="ident">riscv::register::sstatus</span>::{<span class="self">self</span>, <span class="ident">Sstatus</span>, <span class="ident">SPP</span>};
 
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="doccomment">/// trap context structure containing sstatus, sepc and registers</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TrapContext</span> {
     <span class="kw">pub</span> <span class="ident">x</span>: [<span class="ident">usize</span>; <span class="number">32</span>],
     <span class="kw">pub</span> <span class="ident">sstatus</span>: <span class="ident">Sstatus</span>,
