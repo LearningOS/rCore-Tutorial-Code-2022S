@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["init",""]],"struct":[["SimpleLogger","a simple logger"]]});
+initSidebarItems({"fn":[["init","initiate logger"]],"struct":[["SimpleLogger","a simple logger"]]});

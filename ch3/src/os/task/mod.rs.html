@@ -331,23 +331,23 @@
     <span class="ident">TASK_MANAGER</span>.<span class="ident">run_next_task</span>();
 }
 
-<span class="comment">// Change the status of current `Running` task into `Ready`.</span>
+<span class="doccomment">/// Change the status of current `Running` task into `Ready`.</span>
 <span class="kw">fn</span> <span class="ident">mark_current_suspended</span>() {
     <span class="ident">TASK_MANAGER</span>.<span class="ident">mark_current_suspended</span>();
 }
 
-<span class="comment">// Change the status of current `Running` task into `Exited`.</span>
+<span class="doccomment">/// Change the status of current `Running` task into `Exited`.</span>
 <span class="kw">fn</span> <span class="ident">mark_current_exited</span>() {
     <span class="ident">TASK_MANAGER</span>.<span class="ident">mark_current_exited</span>();
 }
 
-<span class="comment">// Suspend the current &#39;Running&#39; task and run the next task in task list.</span>
+<span class="doccomment">/// Suspend the current &#39;Running&#39; task and run the next task in task list.</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">suspend_current_and_run_next</span>() {
     <span class="ident">mark_current_suspended</span>();
     <span class="ident">run_next_task</span>();
 }
 
-<span class="comment">// Exit the current &#39;Running&#39; task and run the next task in task list.</span>
+<span class="doccomment">/// Exit the current &#39;Running&#39; task and run the next task in task list.</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">exit_current_and_run_next</span>() {
     <span class="ident">mark_current_exited</span>();
     <span class="ident">run_next_task</span>();
