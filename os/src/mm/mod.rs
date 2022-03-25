@@ -4,9 +4,6 @@
 //! everything about memory management, like frame allocator, page table,
 //! map area and memory set, is implemented here.
 //! 
-//! A single global instance of [`FrameAllocator`] called `FRAME_ALLOCATOR` controls
-//! all the frames in the operating system.
-//! 
 //! Every task or process has a memory_set to control its virtual memory.
 
 
