@@ -34,10 +34,10 @@ mod loader;
 mod logging;
 mod sbi;
 mod sync;
-mod syscall;
-mod task;
+pub mod syscall;
+pub mod task;
 mod timer;
-mod trap;
+pub mod trap;
 
 core::arch::global_asm!(include_str!("entry.asm"));
 core::arch::global_asm!(include_str!("link_app.S"));
