@@ -1,3 +1,5 @@
+//! Building applications linker
+
 use std::fs::{read_dir, File};
 use std::io::{Result, Write};
 
@@ -9,6 +11,7 @@ fn main() {
 
 static TARGET_PATH: &str = "../user/build/elf/";
 
+/// get app data and build linker
 fn insert_app_data() -> Result<()> {
     let mut f = File::create("src/link_app.S").unwrap();
     let mut apps: Vec<_> = read_dir("../user/build/elf/")

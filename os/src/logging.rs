@@ -2,6 +2,7 @@
 
 use log::{self, Level, LevelFilter, Log, Metadata, Record};
 
+/// a simple logger
 struct SimpleLogger;
 
 impl Log for SimpleLogger {
@@ -29,6 +30,7 @@ impl Log for SimpleLogger {
     fn flush(&self) {}
 }
 
+/// initiate logger
 pub fn init() {
     static LOGGER: SimpleLogger = SimpleLogger;
     log::set_logger(&LOGGER).unwrap();
