@@ -39,6 +39,7 @@ pub struct TaskManager {
     inner: UPSafeCell<TaskManagerInner>,
 }
 
+/// The task manager inner in 'UPSafeCell'
 struct TaskManagerInner {
     /// task list
     tasks: [TaskControlBlock; MAX_APP_NUM],
@@ -47,6 +48,7 @@ struct TaskManagerInner {
 }
 
 lazy_static! {
+    /// 'TaskManager' instance through lazy_static!
     pub static ref TASK_MANAGER: TaskManager = {
         let num_app = get_num_app();
         let mut tasks = [TaskControlBlock {
@@ -137,27 +139,34 @@ impl TaskManager {
     // LAB1: Try to implement your function to update or get task info!
 }
 
+/// Run the first task in task list.
 pub fn run_first_task() {
     TASK_MANAGER.run_first_task();
 }
 
+/// Switch current `Running` task to the task we have found,
+/// or there is no `Ready` task and we can exit with all applications completed
 fn run_next_task() {
     TASK_MANAGER.run_next_task();
 }
 
+// Change the status of current `Running` task into `Ready`.
 fn mark_current_suspended() {
     TASK_MANAGER.mark_current_suspended();
 }
 
+// Change the status of current `Running` task into `Exited`.
 fn mark_current_exited() {
     TASK_MANAGER.mark_current_exited();
 }
 
+// Suspend the current 'Running' task and run the next task in task list.
 pub fn suspend_current_and_run_next() {
     mark_current_suspended();
     run_next_task();
 }
 
+// Exit the current 'Running' task and run the next task in task list.
 pub fn exit_current_and_run_next() {
     mark_current_exited();
     run_next_task();
