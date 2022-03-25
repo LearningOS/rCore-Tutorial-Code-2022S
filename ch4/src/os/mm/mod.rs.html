@@ -32,17 +32,11 @@
 <span id="27">27</span>
 <span id="28">28</span>
 <span id="29">29</span>
-<span id="30">30</span>
-<span id="31">31</span>
-<span id="32">32</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Memory management implementation</span>
 <span class="doccomment">//! </span>
 <span class="doccomment">//! SV39 page-based virtual-memory architecture for RV64 systems, and</span>
 <span class="doccomment">//! everything about memory management, like frame allocator, page table,</span>
 <span class="doccomment">//! map area and memory set, is implemented here.</span>
-<span class="doccomment">//! </span>
-<span class="doccomment">//! A single global instance of [`FrameAllocator`] called `FRAME_ALLOCATOR` controls</span>
-<span class="doccomment">//! all the frames in the operating system.</span>
 <span class="doccomment">//! </span>
 <span class="doccomment">//! Every task or process has a memory_set to control its virtual memory.</span>
 
