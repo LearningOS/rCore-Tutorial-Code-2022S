@@ -107,10 +107,10 @@
 <span class="kw">mod</span> <span class="ident">logging</span>;
 <span class="kw">mod</span> <span class="ident">sbi</span>;
 <span class="kw">mod</span> <span class="ident">sync</span>;
-<span class="kw">mod</span> <span class="ident">syscall</span>;
-<span class="kw">mod</span> <span class="ident">task</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">syscall</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">task</span>;
 <span class="kw">mod</span> <span class="ident">timer</span>;
-<span class="kw">mod</span> <span class="ident">trap</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">trap</span>;
 
 <span class="macro">core::arch::global_asm!</span>(<span class="macro">include_str!</span>(<span class="string">&quot;entry.asm&quot;</span>));
 <span class="macro">core::arch::global_asm!</span>(<span class="macro">include_str!</span>(<span class="string">&quot;link_app.S&quot;</span>));
