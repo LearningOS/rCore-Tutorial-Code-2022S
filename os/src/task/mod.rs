@@ -48,7 +48,7 @@ struct TaskManagerInner {
 }
 
 lazy_static! {
-    /// 'TaskManager' instance through lazy_static!
+    /// a `TaskManager` instance through lazy_static!
     pub static ref TASK_MANAGER: TaskManager = {
         let num_app = get_num_app();
         let mut tasks = [TaskControlBlock {
