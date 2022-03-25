@@ -20,7 +20,11 @@
 <span id="15">15</span>
 <span id="16">16</span>
 <span id="17">17</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::sbi::shutdown</span>;
+<span id="18">18</span>
+<span id="19">19</span>
+</pre><pre class="rust"><code><span class="doccomment">//! The panic handler</span>
+
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::sbi::shutdown</span>;
 <span class="kw">use</span> <span class="ident">core::panic::PanicInfo</span>;
 
 <span class="attribute">#[<span class="ident">panic_handler</span>]</span>
@@ -36,6 +40,7 @@
         <span class="macro">println!</span>(<span class="string">&quot;[kernel] Panicked: {}&quot;</span>, <span class="ident">info</span>.<span class="ident">message</span>().<span class="ident">unwrap</span>());
     }
     <span class="ident">shutdown</span>()
-}</code></pre></div>
+}
+</code></pre></div>
 </section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="os" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.61.0-nightly (03a8cc7df 2022-02-21)" ></div>
 </body></html>

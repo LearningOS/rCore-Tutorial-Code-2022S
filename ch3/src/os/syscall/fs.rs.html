@@ -19,7 +19,11 @@
 <span id="14">14</span>
 <span id="15">15</span>
 <span id="16">16</span>
-</pre><pre class="rust"><code><span class="kw">const</span> <span class="ident">FD_STDOUT</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">1</span>;
+<span id="17">17</span>
+<span id="18">18</span>
+</pre><pre class="rust"><code><span class="doccomment">//! File and filesystem-related syscalls</span>
+
+<span class="kw">const</span> <span class="ident">FD_STDOUT</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">1</span>;
 
 <span class="comment">// YOUR JOB: 修改 sys_write 使之通过测试</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sys_write</span>(<span class="ident">fd</span>: <span class="ident">usize</span>, <span class="ident">buf</span>: <span class="kw-2">*const</span> <span class="ident">u8</span>, <span class="ident">len</span>: <span class="ident">usize</span>) -&gt; <span class="ident">isize</span> {

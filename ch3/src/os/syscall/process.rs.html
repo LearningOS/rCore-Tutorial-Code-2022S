@@ -49,7 +49,11 @@
 <span id="44">44</span>
 <span id="45">45</span>
 <span id="46">46</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::config</span>::{<span class="ident">MAX_APP_NUM</span>, <span class="ident">MAX_SYSCALL_NUM</span>};
+<span id="47">47</span>
+<span id="48">48</span>
+</pre><pre class="rust"><code><span class="doccomment">//! Process management syscalls</span>
+
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::config</span>::{<span class="ident">MAX_APP_NUM</span>, <span class="ident">MAX_SYSCALL_NUM</span>};
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::task</span>::{<span class="ident">exit_current_and_run_next</span>, <span class="ident">suspend_current_and_run_next</span>, <span class="ident">TaskStatus</span>};
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::timer::get_time_us</span>;
 
