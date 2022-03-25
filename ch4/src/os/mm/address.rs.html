@@ -239,20 +239,30 @@
 <span id="234">234</span>
 <span id="235">235</span>
 <span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident"><span class="kw">super</span>::PageTableEntry</span>;
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::config</span>::{<span class="ident">PAGE_SIZE</span>, <span class="ident">PAGE_SIZE_BITS</span>};
 <span class="kw">use</span> <span class="ident">core::fmt</span>::{<span class="self">self</span>, <span class="ident">Debug</span>, <span class="ident">Formatter</span>};
 
-<span class="doccomment">/// Definitions</span>
+<span class="doccomment">/// physical address</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Ord</span>, <span class="ident">PartialOrd</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PhysAddr</span>(<span class="kw">pub</span> <span class="ident">usize</span>);
 
+<span class="doccomment">/// virtual address</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Ord</span>, <span class="ident">PartialOrd</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">VirtAddr</span>(<span class="kw">pub</span> <span class="ident">usize</span>);
 
+<span class="doccomment">/// physical page number</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Ord</span>, <span class="ident">PartialOrd</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PhysPageNum</span>(<span class="kw">pub</span> <span class="ident">usize</span>);
 
+<span class="doccomment">/// virtual page number</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Ord</span>, <span class="ident">PartialOrd</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">VirtPageNum</span>(<span class="kw">pub</span> <span class="ident">usize</span>);
 
@@ -412,6 +422,7 @@
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="doccomment">/// a simple range structure for type T</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SimpleRange</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">StepByOne</span> <span class="op">+</span> <span class="ident">Copy</span> <span class="op">+</span> <span class="ident">PartialEq</span> <span class="op">+</span> <span class="ident">PartialOrd</span> <span class="op">+</span> <span class="ident">Debug</span>,
@@ -444,6 +455,7 @@
         <span class="ident">SimpleRangeIterator::new</span>(<span class="self">self</span>.<span class="ident">l</span>, <span class="self">self</span>.<span class="ident">r</span>)
     }
 }
+<span class="doccomment">/// iterator for the simple range structure</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SimpleRangeIterator</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">StepByOne</span> <span class="op">+</span> <span class="ident">Copy</span> <span class="op">+</span> <span class="ident">PartialEq</span> <span class="op">+</span> <span class="ident">PartialOrd</span> <span class="op">+</span> <span class="ident">Debug</span>,
@@ -474,6 +486,8 @@
         }
     }
 }
+
+<span class="doccomment">/// a simple range structure for virtual page number</span>
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">VPNRange</span> <span class="op">=</span> <span class="ident">SimpleRange</span><span class="op">&lt;</span><span class="ident">VirtPageNum</span><span class="op">&gt;</span>;
 </code></pre></div>
 </section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="os" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.61.0-nightly (03a8cc7df 2022-02-21)" ></div>
