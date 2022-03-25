@@ -71,6 +71,8 @@
 <span id="66">66</span>
 <span id="67">67</span>
 <span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
 </pre><pre class="rust"><code><span class="doccomment">//! The main module and entrypoint</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! Various facilities of the kernels are implemented as submodules. The most</span>
@@ -115,6 +117,7 @@
 <span class="macro">core::arch::global_asm!</span>(<span class="macro">include_str!</span>(<span class="string">&quot;entry.asm&quot;</span>));
 <span class="macro">core::arch::global_asm!</span>(<span class="macro">include_str!</span>(<span class="string">&quot;link_app.S&quot;</span>));
 
+<span class="doccomment">/// clear BSS segment</span>
 <span class="kw">fn</span> <span class="ident">clear_bss</span>() {
     <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
         <span class="kw">fn</span> <span class="ident">sbss</span>();
@@ -127,6 +130,7 @@
 }
 
 <span class="attribute">#[<span class="ident">no_mangle</span>]</span>
+<span class="doccomment">/// the rust entry-point of os</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rust_main</span>() -&gt; <span class="op">!</span> {
     <span class="ident">clear_bss</span>();
     <span class="ident">logging::init</span>();
