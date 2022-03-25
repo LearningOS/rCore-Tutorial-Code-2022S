@@ -170,6 +170,15 @@
 <span id="165">165</span>
 <span id="166">166</span>
 <span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
+<span id="176">176</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Task management implementation</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! Everything about task management, like starting and switching tasks is</span>
@@ -211,6 +220,7 @@
     <span class="ident">inner</span>: <span class="ident">UPSafeCell</span><span class="op">&lt;</span><span class="ident">TaskManagerInner</span><span class="op">&gt;</span>,
 }
 
+<span class="doccomment">/// The task manager inner in &#39;UPSafeCell&#39;</span>
 <span class="kw">struct</span> <span class="ident">TaskManagerInner</span> {
     <span class="doccomment">/// task list</span>
     <span class="ident">tasks</span>: [<span class="ident">TaskControlBlock</span>; <span class="ident">MAX_APP_NUM</span>],
@@ -219,6 +229,7 @@
 }
 
 <span class="macro">lazy_static!</span> {
+    <span class="doccomment">/// &#39;TaskManager&#39; instance through lazy_static!</span>
     <span class="kw">pub</span> <span class="kw">static</span> <span class="kw-2">ref</span> <span class="ident">TASK_MANAGER</span>: <span class="ident">TaskManager</span> <span class="op">=</span> {
         <span class="kw">let</span> <span class="ident">num_app</span> <span class="op">=</span> <span class="ident">get_num_app</span>();
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">tasks</span> <span class="op">=</span> [<span class="ident">TaskControlBlock</span> {
@@ -309,27 +320,34 @@
     <span class="comment">// LAB1: Try to implement your function to update or get task info!</span>
 }
 
+<span class="doccomment">/// Run the first task in task list.</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">run_first_task</span>() {
     <span class="ident">TASK_MANAGER</span>.<span class="ident">run_first_task</span>();
 }
 
+<span class="doccomment">/// Switch current `Running` task to the task we have found,</span>
+<span class="doccomment">/// or there is no `Ready` task and we can exit with all applications completed</span>
 <span class="kw">fn</span> <span class="ident">run_next_task</span>() {
     <span class="ident">TASK_MANAGER</span>.<span class="ident">run_next_task</span>();
 }
 
+<span class="comment">// Change the status of current `Running` task into `Ready`.</span>
 <span class="kw">fn</span> <span class="ident">mark_current_suspended</span>() {
     <span class="ident">TASK_MANAGER</span>.<span class="ident">mark_current_suspended</span>();
 }
 
+<span class="comment">// Change the status of current `Running` task into `Exited`.</span>
 <span class="kw">fn</span> <span class="ident">mark_current_exited</span>() {
     <span class="ident">TASK_MANAGER</span>.<span class="ident">mark_current_exited</span>();
 }
 
+<span class="comment">// Suspend the current &#39;Running&#39; task and run the next task in task list.</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">suspend_current_and_run_next</span>() {
     <span class="ident">mark_current_suspended</span>();
     <span class="ident">run_next_task</span>();
 }
 
+<span class="comment">// Exit the current &#39;Running&#39; task and run the next task in task list.</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">exit_current_and_run_next</span>() {
     <span class="ident">mark_current_exited</span>();
     <span class="ident">run_next_task</span>();

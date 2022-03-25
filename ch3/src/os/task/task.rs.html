@@ -21,11 +21,14 @@
 <span id="16">16</span>
 <span id="17">17</span>
 <span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Types related to task management</span>
 
 <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::TaskContext</span>;
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="doccomment">/// task control block structure</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TaskControlBlock</span> {
     <span class="kw">pub</span> <span class="ident">task_status</span>: <span class="ident">TaskStatus</span>,
     <span class="kw">pub</span> <span class="ident">task_cx</span>: <span class="ident">TaskContext</span>,
@@ -33,6 +36,7 @@
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>)]</span>
+<span class="comment">// task status: UnInit, Ready, Running, Exited</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">TaskStatus</span> {
     <span class="ident">UnInit</span>,
     <span class="ident">Ready</span>,

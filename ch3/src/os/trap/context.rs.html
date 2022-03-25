@@ -28,7 +28,11 @@
 <span id="23">23</span>
 <span id="24">24</span>
 <span id="25">25</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">riscv::register::sstatus</span>::{<span class="self">self</span>, <span class="ident">Sstatus</span>, <span class="ident">SPP</span>};
+<span id="26">26</span>
+<span id="27">27</span>
+</pre><pre class="rust"><code><span class="doccomment">//! Implementation of [`TrapContext`]</span>
+
+<span class="kw">use</span> <span class="ident">riscv::register::sstatus</span>::{<span class="self">self</span>, <span class="ident">Sstatus</span>, <span class="ident">SPP</span>};
 
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TrapContext</span> {
