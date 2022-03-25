@@ -1,3 +1,5 @@
+//! Process management syscalls
+
 use crate::config::{MAX_APP_NUM, MAX_SYSCALL_NUM};
 use crate::task::{exit_current_and_run_next, suspend_current_and_run_next, TaskStatus};
 use crate::timer::get_time_us;
