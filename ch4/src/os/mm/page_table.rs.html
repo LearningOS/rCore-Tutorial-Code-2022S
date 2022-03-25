@@ -158,7 +158,11 @@
 <span id="153">153</span>
 <span id="154">154</span>
 <span id="155">155</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">frame_alloc</span>, <span class="ident">FrameTracker</span>, <span class="ident">PhysPageNum</span>, <span class="ident">StepByOne</span>, <span class="ident">VirtAddr</span>, <span class="ident">VirtPageNum</span>};
+<span id="156">156</span>
+<span id="157">157</span>
+</pre><pre class="rust"><code><span class="doccomment">//! Implementation of [`PageTableEntry`] and [`PageTable`].</span>
+
+<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">frame_alloc</span>, <span class="ident">FrameTracker</span>, <span class="ident">PhysPageNum</span>, <span class="ident">StepByOne</span>, <span class="ident">VirtAddr</span>, <span class="ident">VirtPageNum</span>};
 <span class="kw">use</span> <span class="ident">alloc::vec</span>;
 <span class="kw">use</span> <span class="ident">alloc::vec::Vec</span>;
 <span class="kw">use</span> <span class="ident">bitflags</span>::<span class="kw-2">*</span>;

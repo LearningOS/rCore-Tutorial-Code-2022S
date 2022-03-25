@@ -246,7 +246,11 @@
 <span id="241">241</span>
 <span id="242">242</span>
 <span id="243">243</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident"><span class="kw">super</span>::PageTableEntry</span>;
+<span id="244">244</span>
+<span id="245">245</span>
+</pre><pre class="rust"><code><span class="doccomment">//! Implementation of physical and virtual address and page number.</span>
+
+<span class="kw">use</span> <span class="ident"><span class="kw">super</span>::PageTableEntry</span>;
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::config</span>::{<span class="ident">PAGE_SIZE</span>, <span class="ident">PAGE_SIZE_BITS</span>};
 <span class="kw">use</span> <span class="ident">core::fmt</span>::{<span class="self">self</span>, <span class="ident">Debug</span>, <span class="ident">Formatter</span>};
 

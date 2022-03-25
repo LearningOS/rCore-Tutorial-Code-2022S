@@ -347,7 +347,11 @@
 <span id="342">342</span>
 <span id="343">343</span>
 <span id="344">344</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">frame_alloc</span>, <span class="ident">FrameTracker</span>};
+<span id="345">345</span>
+<span id="346">346</span>
+</pre><pre class="rust"><code><span class="doccomment">//! Implementation of [`MapArea`] and [`MemorySet`].</span>
+
+<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">frame_alloc</span>, <span class="ident">FrameTracker</span>};
 <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">PTEFlags</span>, <span class="ident">PageTable</span>, <span class="ident">PageTableEntry</span>};
 <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">PhysAddr</span>, <span class="ident">PhysPageNum</span>, <span class="ident">VirtAddr</span>, <span class="ident">VirtPageNum</span>};
 <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">StepByOne</span>, <span class="ident">VPNRange</span>};
