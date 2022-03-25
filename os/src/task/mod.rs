@@ -150,23 +150,23 @@ fn run_next_task() {
     TASK_MANAGER.run_next_task();
 }
 
-// Change the status of current `Running` task into `Ready`.
+/// Change the status of current `Running` task into `Ready`.
 fn mark_current_suspended() {
     TASK_MANAGER.mark_current_suspended();
 }
 
-// Change the status of current `Running` task into `Exited`.
+/// Change the status of current `Running` task into `Exited`.
 fn mark_current_exited() {
     TASK_MANAGER.mark_current_exited();
 }
 
-// Suspend the current 'Running' task and run the next task in task list.
+/// Suspend the current 'Running' task and run the next task in task list.
 pub fn suspend_current_and_run_next() {
     mark_current_suspended();
     run_next_task();
 }
 
-// Exit the current 'Running' task and run the next task in task list.
+/// Exit the current 'Running' task and run the next task in task list.
 pub fn exit_current_and_run_next() {
     mark_current_exited();
     run_next_task();

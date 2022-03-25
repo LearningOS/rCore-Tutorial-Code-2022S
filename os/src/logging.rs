@@ -30,7 +30,7 @@ impl Log for SimpleLogger {
     fn flush(&self) {}
 }
 
-// initiate logger
+/// initiate logger
 pub fn init() {
     static LOGGER: SimpleLogger = SimpleLogger;
     log::set_logger(&LOGGER).unwrap();
