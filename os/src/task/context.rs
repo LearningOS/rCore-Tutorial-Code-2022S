@@ -3,6 +3,7 @@ use crate::trap::trap_return;
 
 #[derive(Copy, Clone)]
 #[repr(C)]
+/// task context structure containing some registers
 pub struct TaskContext {
     ra: usize,
     sp: usize,

@@ -49,7 +49,7 @@ struct TaskManagerInner {
 }
 
 lazy_static! {
-    /// a 'TaskManager' instance through lazy_static!
+    /// a `TaskManager` instance through lazy_static!
     pub static ref TASK_MANAGER: TaskManager = {
         info!("init TASK_MANAGER");
         let num_app = get_num_app();
