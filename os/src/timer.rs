@@ -14,7 +14,7 @@ pub fn get_time() -> usize {
 
 /// get current time in microseconds
 pub fn get_time_us() -> usize {
-    time::read() / (CLOCK_FREQ / MICRO_PER_SEC)
+    (time::read() as f64 / (CLOCK_FREQ as f64 / MICRO_PER_SEC as f64)) as _
 }
 
 /// set the next timer interrupt
