@@ -22,6 +22,7 @@
 <span id="17">17</span>
 <span id="18">18</span>
 <span id="19">19</span>
+<span id="20">20</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Constants used in rCore</span>
 
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">USER_STACK_SIZE</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">4096</span> <span class="op">*</span> <span class="number">2</span>;
@@ -30,6 +31,7 @@
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MEMORY_END</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">0x80800000</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">PAGE_SIZE</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">0x1000</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">PAGE_SIZE_BITS</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">0xc</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MAX_SYSCALL_NUM</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">500</span>;
 
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">TRAMPOLINE</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="ident">usize::MAX</span> <span class="op">-</span> <span class="ident">PAGE_SIZE</span> <span class="op">+</span> <span class="number">1</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">TRAP_CONTEXT</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="ident">TRAMPOLINE</span> <span class="op">-</span> <span class="ident">PAGE_SIZE</span>;

@@ -52,9 +52,23 @@
 <span id="47">47</span>
 <span id="48">48</span>
 <span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Process management syscalls</span>
 
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::task</span>::{<span class="ident">exit_current_and_run_next</span>, <span class="ident">suspend_current_and_run_next</span>};
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::config::MAX_SYSCALL_NUM</span>;
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::task</span>::{<span class="ident">exit_current_and_run_next</span>, <span class="ident">suspend_current_and_run_next</span>, <span class="ident">TaskStatus</span>};
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::timer::get_time_us</span>;
 
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
@@ -62,6 +76,13 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TimeVal</span> {
     <span class="kw">pub</span> <span class="ident">sec</span>: <span class="ident">usize</span>,
     <span class="kw">pub</span> <span class="ident">usec</span>: <span class="ident">usize</span>,
+}
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TaskInfo</span> {
+    <span class="kw">pub</span> <span class="ident">status</span>: <span class="ident">TaskStatus</span>,
+    <span class="kw">pub</span> <span class="ident">syscall_times</span>: [<span class="ident">u32</span>; <span class="ident">MAX_SYSCALL_NUM</span>],
+    <span class="kw">pub</span> <span class="ident">time</span>: <span class="ident">usize</span>,
 }
 
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sys_exit</span>(<span class="ident">exit_code</span>: <span class="ident">i32</span>) -&gt; <span class="op">!</span> {
@@ -99,6 +120,11 @@
 }
 
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sys_munmap</span>(<span class="ident">_start</span>: <span class="ident">usize</span>, <span class="ident">_len</span>: <span class="ident">usize</span>) -&gt; <span class="ident">isize</span> {
+    <span class="op">-</span><span class="number">1</span>
+}
+
+<span class="comment">// YOUR JOB: 引入虚地址后重写 sys_task_info</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sys_task_info</span>(<span class="ident">ti</span>: <span class="kw-2">*mut</span> <span class="ident">TaskInfo</span>) -&gt; <span class="ident">isize</span> {
     <span class="op">-</span><span class="number">1</span>
 }
 </code></pre></div>
