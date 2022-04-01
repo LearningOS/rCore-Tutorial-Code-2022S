@@ -1,6 +1,7 @@
 //! Process management syscalls
 
-use crate::task::{exit_current_and_run_next, suspend_current_and_run_next};
+use crate::config::MAX_SYSCALL_NUM;
+use crate::task::{exit_current_and_run_next, suspend_current_and_run_next, TaskStatus};
 use crate::timer::get_time_us;
 
 #[repr(C)]
@@ -8,6 +9,13 @@ use crate::timer::get_time_us;
 pub struct TimeVal {
     pub sec: usize,
     pub usec: usize,
+}
+
+#[derive(Clone, Copy)]
+pub struct TaskInfo {
+    pub status: TaskStatus,
+    pub syscall_times: [u32; MAX_SYSCALL_NUM],
+    pub time: usize,
 }
 
 pub fn sys_exit(exit_code: i32) -> ! {
@@ -45,5 +53,10 @@ pub fn sys_mmap(_start: usize, _len: usize, _port: usize) -> isize {
 }
 
 pub fn sys_munmap(_start: usize, _len: usize) -> isize {
+    -1
+}
+
+// YOUR JOB: 引入虚地址后重写 sys_task_info
+pub fn sys_task_info(ti: *mut TaskInfo) -> isize {
     -1
 }
