@@ -4,16 +4,24 @@ use crate::loader::get_app_data_by_name;
 use crate::mm::{translated_refmut, translated_str};
 use crate::task::{
     add_task, current_task, current_user_token, exit_current_and_run_next,
-    suspend_current_and_run_next,
+    suspend_current_and_run_next, TaskStatus,
 };
 use crate::timer::get_time_us;
 use alloc::sync::Arc;
+use crate::config::MAX_SYSCALL_NUM;
 
 #[repr(C)]
 #[derive(Debug)]
 pub struct TimeVal {
     pub sec: usize,
     pub usec: usize,
+}
+
+#[derive(Clone, Copy)]
+pub struct TaskInfo {
+    pub status: TaskStatus,
+    pub syscall_times: [u32; MAX_SYSCALL_NUM],
+    pub time: usize,
 }
 
 pub fn sys_exit(exit_code: i32) -> ! {
@@ -105,6 +113,11 @@ pub fn sys_get_time(_ts: *mut TimeVal, _tz: usize) -> isize {
     //     };
     // }
     0
+}
+
+// YOUR JOB: 引入虚地址后重写 sys_task_info
+pub fn sys_task_info(ti: *mut TaskInfo) -> isize {
+    -1
 }
 
 // CLUE: 从 ch4 开始不再对调度算法进行测试~
