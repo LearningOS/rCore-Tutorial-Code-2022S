@@ -107,12 +107,28 @@
 <span id="102">102</span>
 <span id="103">103</span>
 <span id="104">104</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::config</span>::{<span class="ident">KERNEL_STACK_SIZE</span>, <span class="ident">PAGE_SIZE</span>, <span class="ident">TRAMPOLINE</span>};
+<span id="105">105</span>
+<span id="106">106</span>
+<span id="107">107</span>
+<span id="108">108</span>
+<span id="109">109</span>
+<span id="110">110</span>
+<span id="111">111</span>
+<span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
+</pre><pre class="rust"><code><span class="doccomment">//! Task pid implementation.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Assign PID to the process here. At the same time, the position of the application KernelStack</span>
+<span class="doccomment">//! is determined according to the PID.</span>
+
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::config</span>::{<span class="ident">KERNEL_STACK_SIZE</span>, <span class="ident">PAGE_SIZE</span>, <span class="ident">TRAMPOLINE</span>};
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::mm</span>::{<span class="ident">MapPermission</span>, <span class="ident">VirtAddr</span>, <span class="ident">KERNEL_SPACE</span>};
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::sync::UPSafeCell</span>;
 <span class="kw">use</span> <span class="ident">alloc::vec::Vec</span>;
 <span class="kw">use</span> <span class="ident">lazy_static</span>::<span class="kw-2">*</span>;
 
+<span class="doccomment">/// Process identifier allocator using stack allocation</span>
 <span class="kw">struct</span> <span class="ident">PidAllocator</span> {
     <span class="ident">current</span>: <span class="ident">usize</span>,
     <span class="ident">recycled</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>,
@@ -145,10 +161,12 @@
 }
 
 <span class="macro">lazy_static!</span> {
+    <span class="doccomment">/// Pid allocator instance through lazy_static!</span>
     <span class="kw">static</span> <span class="kw-2">ref</span> <span class="ident">PID_ALLOCATOR</span>: <span class="ident">UPSafeCell</span><span class="op">&lt;</span><span class="ident">PidAllocator</span><span class="op">&gt;</span> <span class="op">=</span>
         <span class="kw">unsafe</span> { <span class="ident">UPSafeCell::new</span>(<span class="ident">PidAllocator::new</span>()) };
 }
 
+<span class="doccomment">/// Abstract structure of PID</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PidHandle</span>(<span class="kw">pub</span> <span class="ident">usize</span>);
 
 <span class="kw">impl</span> <span class="ident">Drop</span> <span class="kw">for</span> <span class="ident">PidHandle</span> {
@@ -169,6 +187,7 @@
     (<span class="ident">bottom</span>, <span class="ident">top</span>)
 }
 
+<span class="doccomment">/// KernelStack corresponding to PID</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">KernelStack</span> {
     <span class="ident">pid</span>: <span class="ident">usize</span>,
 }
@@ -185,6 +204,7 @@
         <span class="ident">KernelStack</span> { <span class="ident">pid</span>: <span class="ident">pid_handle</span>.<span class="number">0</span> }
     }
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused</span>)]</span>
+    <span class="doccomment">/// Push a variable of type T into the top of the KernelStack and return its raw pointer</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">push_on_top</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">value</span>: <span class="ident">T</span>) -&gt; <span class="kw-2">*mut</span> <span class="ident">T</span>
     <span class="kw">where</span>
         <span class="ident">T</span>: <span class="ident">Sized</span>,

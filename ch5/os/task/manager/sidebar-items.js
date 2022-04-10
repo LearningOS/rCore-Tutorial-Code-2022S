@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["add_task",""],["fetch_task",""]],"struct":[["TASK_MANAGER",""],["TaskManager",""]]});
+initSidebarItems({"fn":[["add_task",""],["fetch_task",""]],"struct":[["TASK_MANAGER","TASK_MANAGER instance through lazy_static!"],["TaskManager",""]]});

@@ -96,13 +96,19 @@
 <span id="91">91</span>
 <span id="92">92</span>
 <span id="93">93</span>
-</pre><pre class="rust"><code><span class="doccomment">//! Task management implementation</span>
+<span id="94">94</span>
+<span id="95">95</span>
+<span id="96">96</span>
+<span id="97">97</span>
+<span id="98">98</span>
+<span id="99">99</span>
+</pre><pre class="rust"><code><span class="doccomment">//! Implementation of process management mechanism</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! Everything about task management, like starting and switching tasks is</span>
-<span class="doccomment">//! implemented here.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! A single global instance of [`TaskManager`] called `TASK_MANAGER` controls</span>
-<span class="doccomment">//! all the tasks in the operating system.</span>
+<span class="doccomment">//! Here is the entry for process scheduling required by other modules</span>
+<span class="doccomment">//! (such as syscall or clock interrupt).</span>
+<span class="doccomment">//! By suspending or exiting the current process, you can</span>
+<span class="doccomment">//! modify the process state, manage the process queue through TASK_MANAGER,</span>
+<span class="doccomment">//! and switch the control flow through PROCESSOR.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! Be careful when you see [`__switch`]. Control flow around this function</span>
 <span class="doccomment">//! might not be what you expect.</span>
@@ -129,6 +135,7 @@
     <span class="ident">current_task</span>, <span class="ident">current_trap_cx</span>, <span class="ident">current_user_token</span>, <span class="ident">run_tasks</span>, <span class="ident">schedule</span>, <span class="ident">take_current_task</span>,
 };
 
+<span class="doccomment">/// Make current task suspended and switch to the next task</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">suspend_current_and_run_next</span>() {
     <span class="comment">// There must be an application running.</span>
     <span class="kw">let</span> <span class="ident">task</span> <span class="op">=</span> <span class="ident">take_current_task</span>().<span class="ident">unwrap</span>();
@@ -147,6 +154,7 @@
     <span class="ident">schedule</span>(<span class="ident">task_cx_ptr</span>);
 }
 
+<span class="doccomment">/// Exit current task, recycle process resources and switch to the next task</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">exit_current_and_run_next</span>(<span class="ident">exit_code</span>: <span class="ident">i32</span>) {
     <span class="comment">// take from Processor</span>
     <span class="kw">let</span> <span class="ident">task</span> <span class="op">=</span> <span class="ident">take_current_task</span>().<span class="ident">unwrap</span>();
@@ -181,6 +189,10 @@
 }
 
 <span class="macro">lazy_static!</span> {
+    <span class="doccomment">/// Creation of initial process</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// the name &quot;initproc&quot; may be changed to any other app name like &quot;usertests&quot;,</span>
+    <span class="doccomment">/// but we have user_shell, so we don&#39;t need to change it.</span>
     <span class="kw">pub</span> <span class="kw">static</span> <span class="kw-2">ref</span> <span class="ident">INITPROC</span>: <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">TaskControlBlock</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Arc::new</span>(<span class="ident">TaskControlBlock::new</span>(
         <span class="ident">get_app_data_by_name</span>(<span class="string">&quot;initproc&quot;</span>).<span class="ident">unwrap</span>()
     ));
