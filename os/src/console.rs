@@ -1,10 +1,4 @@
-/*！
-console 模块使用 sbi 的 console_putchar 提供了向命令行输出的功能。
-
-这里实现了 print 和 println 宏，来得到写一遍 rust 程序的体验。
-
-此外还实现了 colorize 宏以及相应的输出宏，以提供更多装饰性功能。
-*/
+//! SBI console driver, for text output
 
 use crate::sbi::console_putchar;
 use core::fmt::{self, Write};
@@ -25,6 +19,7 @@ pub fn print(args: fmt::Arguments) {
 }
 
 #[macro_export]
+/// print string macro
 macro_rules! print {
     ($fmt: literal $(, $($arg: tt)+)?) => {
         $crate::console::print(format_args!($fmt $(, $($arg)+)?));
@@ -32,6 +27,7 @@ macro_rules! print {
 }
 
 #[macro_export]
+/// println string macro
 macro_rules! println {
     ($fmt: literal $(, $($arg: tt)+)?) => {
         $crate::console::print(format_args!(concat!($fmt, "\n") $(, $($arg)+)?));

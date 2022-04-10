@@ -1,3 +1,14 @@
+//! Task management implementation
+//!
+//! Everything about task management, like starting and switching tasks is
+//! implemented here.
+//!
+//! A single global instance of [`TaskManager`] called `TASK_MANAGER` controls
+//! all the tasks in the operating system.
+//!
+//! Be careful when you see [`__switch`]. Control flow around this function
+//! might not be what you expect.
+
 mod context;
 mod manager;
 mod pid;

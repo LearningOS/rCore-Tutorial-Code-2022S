@@ -13,4 +13,5 @@ lazy_static = { version = "1.4.0", features = ["spin_no_std"] }
 log = "0.4"
 riscv = { git = "https://gitee.com/rcore-os/riscv", features = ["inline-asm"] }
 spin = "0.9"
+lock_api = "=0.4.6"
 xmas-elf = "0.7.0"

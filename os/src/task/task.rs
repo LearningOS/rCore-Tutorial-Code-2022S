@@ -1,3 +1,5 @@
+//! Types related to task management
+
 use super::TaskContext;
 use super::{pid_alloc, KernelStack, PidHandle};
 use crate::config::TRAP_CONTEXT;
@@ -8,6 +10,7 @@ use alloc::sync::{Arc, Weak};
 use alloc::vec::Vec;
 use core::cell::RefMut;
 
+/// task control block structure
 pub struct TaskControlBlock {
     // immutable
     pub pid: PidHandle,
@@ -161,7 +164,9 @@ impl TaskControlBlock {
 }
 
 #[derive(Copy, Clone, PartialEq)]
+/// task status: UnInit, Ready, Running, Exited
 pub enum TaskStatus {
+    UnInit,
     Ready,
     Running,
     Zombie,
