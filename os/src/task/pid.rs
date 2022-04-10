@@ -1,9 +1,15 @@
+//! Task pid implementation.
+//!
+//! Assign PID to the process here. At the same time, the position of the application KernelStack
+//! is determined according to the PID.
+
 use crate::config::{KERNEL_STACK_SIZE, PAGE_SIZE, TRAMPOLINE};
 use crate::mm::{MapPermission, VirtAddr, KERNEL_SPACE};
 use crate::sync::UPSafeCell;
 use alloc::vec::Vec;
 use lazy_static::*;
 
+/// Process identifier allocator using stack allocation
 struct PidAllocator {
     current: usize,
     recycled: Vec<usize>,
@@ -36,10 +42,12 @@ impl PidAllocator {
 }
 
 lazy_static! {
+    /// Pid allocator instance through lazy_static!
     static ref PID_ALLOCATOR: UPSafeCell<PidAllocator> =
         unsafe { UPSafeCell::new(PidAllocator::new()) };
 }
 
+/// Abstract structure of PID
 pub struct PidHandle(pub usize);
 
 impl Drop for PidHandle {
@@ -60,6 +68,7 @@ pub fn kernel_stack_position(app_id: usize) -> (usize, usize) {
     (bottom, top)
 }
 
+/// KernelStack corresponding to PID
 pub struct KernelStack {
     pid: usize,
 }
@@ -76,6 +85,7 @@ impl KernelStack {
         KernelStack { pid: pid_handle.0 }
     }
     #[allow(unused)]
+    /// Push a variable of type T into the top of the KernelStack and return its raw pointer
     pub fn push_on_top<T>(&self, value: T) -> *mut T
     where
         T: Sized,

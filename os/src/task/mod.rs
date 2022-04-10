@@ -1,10 +1,10 @@
-//! Task management implementation
+//! Implementation of process management mechanism
 //!
-//! Everything about task management, like starting and switching tasks is
-//! implemented here.
-//!
-//! A single global instance of [`TaskManager`] called `TASK_MANAGER` controls
-//! all the tasks in the operating system.
+//! Here is the entry for process scheduling required by other modules
+//! (such as syscall or clock interrupt).
+//! By suspending or exiting the current process, you can
+//! modify the process state, manage the process queue through TASK_MANAGER,
+//! and switch the control flow through PROCESSOR.
 //!
 //! Be careful when you see [`__switch`]. Control flow around this function
 //! might not be what you expect.
@@ -31,6 +31,7 @@ pub use processor::{
     current_task, current_trap_cx, current_user_token, run_tasks, schedule, take_current_task,
 };
 
+/// Make current task suspended and switch to the next task
 pub fn suspend_current_and_run_next() {
     // There must be an application running.
     let task = take_current_task().unwrap();
@@ -49,6 +50,7 @@ pub fn suspend_current_and_run_next() {
     schedule(task_cx_ptr);
 }
 
+/// Exit current task, recycle process resources and switch to the next task
 pub fn exit_current_and_run_next(exit_code: i32) {
     // take from Processor
     let task = take_current_task().unwrap();
@@ -83,6 +85,10 @@ pub fn exit_current_and_run_next(exit_code: i32) {
 }
 
 lazy_static! {
+    /// Creation of initial process
+    ///
+    /// the name "initproc" may be changed to any other app name like "usertests",
+    /// but we have user_shell, so we don't need to change it.
     pub static ref INITPROC: Arc<TaskControlBlock> = Arc::new(TaskControlBlock::new(
         get_app_data_by_name("initproc").unwrap()
     ));

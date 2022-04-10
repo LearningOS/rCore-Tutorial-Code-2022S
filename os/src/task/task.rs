@@ -1,4 +1,4 @@
-//! Types related to task management
+//! Types related to task management & Functions for completely changing TCB
 
 use super::TaskContext;
 use super::{pid_alloc, KernelStack, PidHandle};
@@ -10,7 +10,9 @@ use alloc::sync::{Arc, Weak};
 use alloc::vec::Vec;
 use core::cell::RefMut;
 
-/// task control block structure
+/// Task control block structure
+///
+/// Directly save the contents that will not change during running
 pub struct TaskControlBlock {
     // immutable
     pub pid: PidHandle,
@@ -19,6 +21,10 @@ pub struct TaskControlBlock {
     inner: UPSafeCell<TaskControlBlockInner>,
 }
 
+/// Structure containing more process content
+///
+/// Store the contents that will change during operation
+/// and are wrapped by UPSafeCell to provide mutual exclusion
 pub struct TaskControlBlockInner {
     pub trap_cx_ppn: PhysPageNum,
     pub base_size: usize,
@@ -30,6 +36,7 @@ pub struct TaskControlBlockInner {
     pub exit_code: i32,
 }
 
+/// Simple access to its internal fields
 impl TaskControlBlockInner {
     /*
     pub fn get_task_cx_ptr2(&self) -> *const usize {
@@ -51,9 +58,14 @@ impl TaskControlBlockInner {
 }
 
 impl TaskControlBlock {
+    /// Get the mutex to get the RefMut TaskControlBlockInner
     pub fn inner_exclusive_access(&self) -> RefMut<'_, TaskControlBlockInner> {
         self.inner.exclusive_access()
     }
+
+    /// Create a new process
+    ///
+    /// At present, it is only used for the creation of initproc
     pub fn new(elf_data: &[u8]) -> Self {
         // memory_set with elf program headers/trampoline/trap context/user stack
         let (memory_set, user_sp, entry_point) = MemorySet::from_elf(elf_data);
@@ -93,6 +105,7 @@ impl TaskControlBlock {
         );
         task_control_block
     }
+    /// Load a new elf to replace the original application address space and start execution
     pub fn exec(&self, elf_data: &[u8]) {
         // memory_set with elf program headers/trampoline/trap context/user stack
         let (memory_set, user_sp, entry_point) = MemorySet::from_elf(elf_data);
@@ -118,6 +131,7 @@ impl TaskControlBlock {
         );
         // **** release inner automatically
     }
+    /// Fork from parent to child
     pub fn fork(self: &Arc<TaskControlBlock>) -> Arc<TaskControlBlock> {
         // ---- access parent PCB exclusively
         let mut parent_inner = self.inner_exclusive_access();

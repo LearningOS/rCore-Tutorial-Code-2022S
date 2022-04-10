@@ -40,6 +40,7 @@ pub fn sys_getpid() -> isize {
     current_task().unwrap().pid.0 as isize
 }
 
+/// Syscall Fork which returns 0 for child process and child_pid for parent process
 pub fn sys_fork() -> isize {
     let current_task = current_task().unwrap();
     let new_task = current_task.fork();
@@ -54,6 +55,7 @@ pub fn sys_fork() -> isize {
     new_pid as isize
 }
 
+/// Syscall Exec which accepts the elf path
 pub fn sys_exec(path: *const u8) -> isize {
     let token = current_user_token();
     let path = translated_str(token, path);

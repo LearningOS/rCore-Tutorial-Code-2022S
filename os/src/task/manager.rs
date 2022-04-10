@@ -1,3 +1,9 @@
+//! Implementation of [`TaskManager`]
+//!
+//! It is only used to manage processes and schedule process based on ready queue.
+//! Other CPU process monitoring functions are in Processor.
+
+
 use super::TaskControlBlock;
 use crate::sync::UPSafeCell;
 use alloc::collections::VecDeque;
@@ -24,6 +30,7 @@ impl TaskManager {
 }
 
 lazy_static! {
+    /// TASK_MANAGER instance through lazy_static!
     pub static ref TASK_MANAGER: UPSafeCell<TaskManager> =
         unsafe { UPSafeCell::new(TaskManager::new()) };
 }
