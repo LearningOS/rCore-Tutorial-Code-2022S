@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["add_initproc",""],["exit_current_and_run_next",""],["suspend_current_and_run_next",""]],"mod":[["context","Implementation of [`TaskContext`]"],["manager",""],["pid",""],["processor",""],["switch","Rust wrapper around `__switch`."],["task","Types related to task management"]],"struct":[["INITPROC",""]]});
