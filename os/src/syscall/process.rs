@@ -122,7 +122,7 @@ pub fn sys_task_info(ti: *mut TaskInfo) -> isize {
     -1
 }
 
-// CLUE: 从 ch4 开始不再对调度算法进行测试~
+// YOUR JOB: 实现sys_set_priority，为任务添加优先级
 pub fn sys_set_priority(_prio: isize) -> isize {
     -1
 }
@@ -136,6 +136,7 @@ pub fn sys_munmap(_start: usize, _len: usize) -> isize {
     -1
 }
 
+//
 // YOUR JOB: 实现 sys_spawn 系统调用
 // ALERT: 注意在实现 SPAWN 时不需要复制父进程地址空间，SPAWN != FORK + EXEC 
 pub fn sys_spawn(_path: *const u8) -> isize {
