@@ -146,6 +146,7 @@
 <span id="141">141</span>
 <span id="142">142</span>
 <span id="143">143</span>
+<span id="144">144</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Process management syscalls</span>
 
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::loader::get_app_data_by_name</span>;
@@ -270,7 +271,7 @@
     <span class="op">-</span><span class="number">1</span>
 }
 
-<span class="comment">// CLUE: 从 ch4 开始不再对调度算法进行测试~</span>
+<span class="comment">// YOUR JOB: 实现sys_set_priority，为任务添加优先级</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sys_set_priority</span>(<span class="ident">_prio</span>: <span class="ident">isize</span>) -&gt; <span class="ident">isize</span> {
     <span class="op">-</span><span class="number">1</span>
 }
@@ -284,11 +285,12 @@
     <span class="op">-</span><span class="number">1</span>
 }
 
+<span class="comment">//</span>
 <span class="comment">// YOUR JOB: 实现 sys_spawn 系统调用</span>
 <span class="comment">// ALERT: 注意在实现 SPAWN 时不需要复制父进程地址空间，SPAWN != FORK + EXEC </span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sys_spawn</span>(<span class="ident">_path</span>: <span class="kw-2">*const</span> <span class="ident">u8</span>) -&gt; <span class="ident">isize</span> {
     <span class="op">-</span><span class="number">1</span>
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="os" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.62.0-nightly (8bf93e9b6 2022-04-09)" ></div>
+</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="os" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.62.0-nightly (1f7fb6413 2022-04-10)" ></div>
 </body></html>

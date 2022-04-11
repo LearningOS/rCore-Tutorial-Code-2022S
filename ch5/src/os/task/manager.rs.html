@@ -47,6 +47,7 @@
 <span id="42">42</span>
 <span id="43">43</span>
 <span id="44">44</span>
+<span id="45">45</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Implementation of [`TaskManager`]</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! It is only used to manage processes and schedule process based on ready queue.</span>
@@ -63,6 +64,7 @@
     <span class="ident">ready_queue</span>: <span class="ident">VecDeque</span><span class="op">&lt;</span><span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">TaskControlBlock</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 }
 
+<span class="comment">// YOUR JOB: FIFO-&gt;Stride</span>
 <span class="doccomment">/// A simple FIFO scheduler.</span>
 <span class="kw">impl</span> <span class="ident">TaskManager</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="self">Self</span> {
@@ -92,5 +94,5 @@
     <span class="ident">TASK_MANAGER</span>.<span class="ident">exclusive_access</span>().<span class="ident">fetch</span>()
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="os" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.62.0-nightly (8bf93e9b6 2022-04-09)" ></div>
+</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="os" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.62.0-nightly (1f7fb6413 2022-04-10)" ></div>
 </body></html>

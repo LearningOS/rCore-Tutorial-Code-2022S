@@ -194,7 +194,7 @@
     <span class="doccomment">/// the name &quot;initproc&quot; may be changed to any other app name like &quot;usertests&quot;,</span>
     <span class="doccomment">/// but we have user_shell, so we don&#39;t need to change it.</span>
     <span class="kw">pub</span> <span class="kw">static</span> <span class="kw-2">ref</span> <span class="ident">INITPROC</span>: <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">TaskControlBlock</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Arc::new</span>(<span class="ident">TaskControlBlock::new</span>(
-        <span class="ident">get_app_data_by_name</span>(<span class="string">&quot;initproc&quot;</span>).<span class="ident">unwrap</span>()
+        <span class="ident">get_app_data_by_name</span>(<span class="string">&quot;ch5_initproc&quot;</span>).<span class="ident">unwrap</span>()
     ));
 }
 
@@ -202,5 +202,5 @@
     <span class="ident">add_task</span>(<span class="ident">INITPROC</span>.<span class="ident">clone</span>());
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="os" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.62.0-nightly (8bf93e9b6 2022-04-09)" ></div>
+</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="os" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.62.0-nightly (1f7fb6413 2022-04-10)" ></div>
 </body></html>
