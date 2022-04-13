@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["get_app_data","get applications data"],["get_app_data_by_name","Get elf data by app name"],["get_num_app","Get the total number of applications."],["list_apps","Print all of app names during kernel initialization"]],"struct":[["APP_NAMES","A global read-only vector for saving app names"]]});
