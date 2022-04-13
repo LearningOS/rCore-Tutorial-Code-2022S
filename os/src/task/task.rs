@@ -9,6 +9,9 @@ use crate::trap::{trap_handler, TrapContext};
 use alloc::sync::{Arc, Weak};
 use alloc::vec::Vec;
 use core::cell::RefMut;
+use crate::fs::{File, Stdin, Stdout};
+use alloc::string::String;
+use crate::mm::translated_refmut;
 
 /// Task control block structure
 ///
@@ -46,6 +49,7 @@ pub struct TaskControlBlockInner {
     pub children: Vec<Arc<TaskControlBlock>>,
     /// It is set when active exit or execution error occurs
     pub exit_code: i32,
+    pub fd_table: Vec<Option<Arc<dyn File + Send + Sync>>>,
 }
 
 /// Simple access to its internal fields
@@ -66,6 +70,15 @@ impl TaskControlBlockInner {
     }
     pub fn is_zombie(&self) -> bool {
         self.get_status() == TaskStatus::Zombie
+    }
+    pub fn alloc_fd(&mut self) -> usize {
+        if let Some(fd) = (0..self.fd_table.len())
+            .find(|fd| self.fd_table[*fd].is_none()) {
+            fd
+        } else {
+            self.fd_table.push(None);
+            self.fd_table.len() - 1
+        }
     }
 }
 
@@ -103,6 +116,14 @@ impl TaskControlBlock {
                     parent: None,
                     children: Vec::new(),
                     exit_code: 0,
+                    fd_table: alloc::vec![
+                        // 0 -> stdin
+                        Some(Arc::new(Stdin)),
+                        // 1 -> stdout
+                        Some(Arc::new(Stdout)),
+                        // 2 -> stderr
+                        Some(Arc::new(Stdout)),
+                    ],
                 })
             },
         };
@@ -120,12 +141,11 @@ impl TaskControlBlock {
     /// Load a new elf to replace the original application address space and start execution
     pub fn exec(&self, elf_data: &[u8]) {
         // memory_set with elf program headers/trampoline/trap context/user stack
-        let (memory_set, user_sp, entry_point) = MemorySet::from_elf(elf_data);
+        let (memory_set, mut user_sp, entry_point) = MemorySet::from_elf(elf_data);
         let trap_cx_ppn = memory_set
             .translate(VirtAddr::from(TRAP_CONTEXT).into())
             .unwrap()
             .ppn();
-
         // **** access inner exclusively
         let mut inner = self.inner_exclusive_access();
         // substitute memory_set
@@ -157,6 +177,15 @@ impl TaskControlBlock {
         let pid_handle = pid_alloc();
         let kernel_stack = KernelStack::new(&pid_handle);
         let kernel_stack_top = kernel_stack.get_top();
+        let mut new_fd_table: Vec<Option<Arc<dyn File + Send + Sync>>> = Vec::new();
+        // clone all fds from parent to child
+        for fd in parent_inner.fd_table.iter() {
+            if let Some(file) = fd {
+                new_fd_table.push(Some(file.clone()));
+            } else {
+                new_fd_table.push(None);
+            }
+        }
         let task_control_block = Arc::new(TaskControlBlock {
             pid: pid_handle,
             kernel_stack,
@@ -170,6 +199,7 @@ impl TaskControlBlock {
                     parent: Some(Arc::downgrade(self)),
                     children: Vec::new(),
                     exit_code: 0,
+                    fd_table: new_fd_table,
                 })
             },
         });

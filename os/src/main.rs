@@ -31,7 +31,6 @@ extern crate alloc;
 mod console;
 mod config;
 mod lang_items;
-mod loader;
 mod logging;
 mod mm;
 mod sbi;
@@ -40,9 +39,10 @@ mod syscall;
 mod task;
 mod timer;
 mod trap;
+mod drivers;
+mod fs;
 
 core::arch::global_asm!(include_str!("entry.asm"));
-core::arch::global_asm!(include_str!("link_app.S"));
 
 /// clear BSS segment
 fn clear_bss() {
@@ -64,12 +64,11 @@ pub fn rust_main() -> ! {
     println!("[kernel] Hello, world!");
     mm::init();
     mm::remap_test();
-    task::add_initproc();
-    info!("after initproc!");
     trap::init();
     trap::enable_timer_interrupt();
     timer::set_next_trigger();
-    loader::list_apps();
+    fs::list_apps();
+    task::add_initproc();
     task::run_tasks();
     panic!("Unreachable in rust_main!");
 }
