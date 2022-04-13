@@ -102,6 +102,13 @@
 <span id="97">97</span>
 <span id="98">98</span>
 <span id="99">99</span>
+<span id="100">100</span>
+<span id="101">101</span>
+<span id="102">102</span>
+<span id="103">103</span>
+<span id="104">104</span>
+<span id="105">105</span>
+<span id="106">106</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Implementation of process management mechanism</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! Here is the entry for process scheduling required by other modules</span>
@@ -121,11 +128,16 @@
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::module_inception</span>)]</span>
 <span class="kw">mod</span> <span class="ident">task</span>;
 
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::loader::get_app_data_by_name</span>;
 <span class="kw">use</span> <span class="ident">alloc::sync::Arc</span>;
 <span class="kw">use</span> <span class="ident">lazy_static</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="ident">manager::fetch_task</span>;
 <span class="kw">use</span> <span class="ident">switch::__switch</span>;
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::mm::VirtAddr</span>;
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::mm::MapPermission</span>;
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::config::PAGE_SIZE</span>;
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::timer::get_time_us</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::syscall::process::TaskInfo</span>;
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::fs</span>::{<span class="ident">open_file</span>, <span class="ident">OpenFlags</span>};
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">task</span>::{<span class="ident">TaskControlBlock</span>, <span class="ident">TaskStatus</span>};
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">context::TaskContext</span>;
@@ -193,9 +205,11 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// the name &quot;initproc&quot; may be changed to any other app name like &quot;usertests&quot;,</span>
     <span class="doccomment">/// but we have user_shell, so we don&#39;t need to change it.</span>
-    <span class="kw">pub</span> <span class="kw">static</span> <span class="kw-2">ref</span> <span class="ident">INITPROC</span>: <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">TaskControlBlock</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Arc::new</span>(<span class="ident">TaskControlBlock::new</span>(
-        <span class="ident">get_app_data_by_name</span>(<span class="string">&quot;ch5b_initproc&quot;</span>).<span class="ident">unwrap</span>()
-    ));
+    <span class="kw">pub</span> <span class="kw">static</span> <span class="kw-2">ref</span> <span class="ident">INITPROC</span>: <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">TaskControlBlock</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Arc::new</span>({
+        <span class="kw">let</span> <span class="ident">inode</span> <span class="op">=</span> <span class="ident">open_file</span>(<span class="string">&quot;ch5b_initproc&quot;</span>, <span class="ident">OpenFlags::RDONLY</span>).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">v</span> <span class="op">=</span> <span class="ident">inode</span>.<span class="ident">read_all</span>();
+        <span class="ident">TaskControlBlock::new</span>(<span class="ident">v</span>.<span class="ident">as_slice</span>())
+    });
 }
 
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_initproc</span>() {

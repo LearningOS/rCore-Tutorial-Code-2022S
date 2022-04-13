@@ -253,7 +253,7 @@
 }
 
 <span class="doccomment">/// deallocate a frame</span>
-<span class="kw">fn</span> <span class="ident">frame_dealloc</span>(<span class="ident">ppn</span>: <span class="ident">PhysPageNum</span>) {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">frame_dealloc</span>(<span class="ident">ppn</span>: <span class="ident">PhysPageNum</span>) {
     <span class="ident">FRAME_ALLOCATOR</span>.<span class="ident">exclusive_access</span>().<span class="ident">dealloc</span>(<span class="ident">ppn</span>);
 }
 

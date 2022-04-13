@@ -190,6 +190,34 @@
 <span id="185">185</span>
 <span id="186">186</span>
 <span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
+<span id="212">212</span>
+<span id="213">213</span>
+<span id="214">214</span>
+<span id="215">215</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Types related to task management &amp; Functions for completely changing TCB</span>
 
 <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::TaskContext</span>;
@@ -201,6 +229,7 @@
 <span class="kw">use</span> <span class="ident">alloc::sync</span>::{<span class="ident">Arc</span>, <span class="ident">Weak</span>};
 <span class="kw">use</span> <span class="ident">alloc::vec::Vec</span>;
 <span class="kw">use</span> <span class="ident">core::cell::RefMut</span>;
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::fs</span>::{<span class="ident">File</span>, <span class="ident">Stdin</span>, <span class="ident">Stdout</span>};
 
 <span class="doccomment">/// Task control block structure</span>
 <span class="doccomment">///</span>
@@ -226,6 +255,7 @@
     <span class="kw">pub</span> <span class="ident">parent</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Weak</span><span class="op">&lt;</span><span class="ident">TaskControlBlock</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="kw">pub</span> <span class="ident">children</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">TaskControlBlock</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="kw">pub</span> <span class="ident">exit_code</span>: <span class="ident">i32</span>,
+    <span class="kw">pub</span> <span class="ident">fd_table</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Arc</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">File</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 }
 
 <span class="doccomment">/// Simple access to its internal fields</span>
@@ -246,6 +276,15 @@
     }
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_zombie</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">get_status</span>() <span class="op">==</span> <span class="ident">TaskStatus::Zombie</span>
+    }
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">alloc_fd</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) -&gt; <span class="ident">usize</span> {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">fd</span>) <span class="op">=</span> (<span class="number">0</span>..<span class="self">self</span>.<span class="ident">fd_table</span>.<span class="ident">len</span>())
+            .<span class="ident">find</span>(<span class="op">|</span><span class="ident">fd</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">fd_table</span>[<span class="kw-2">*</span><span class="ident">fd</span>].<span class="ident">is_none</span>()) {
+            <span class="ident">fd</span>
+        } <span class="kw">else</span> {
+            <span class="self">self</span>.<span class="ident">fd_table</span>.<span class="ident">push</span>(<span class="prelude-val">None</span>);
+            <span class="self">self</span>.<span class="ident">fd_table</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="number">1</span>
+        }
     }
 }
 
@@ -283,6 +322,14 @@
                     <span class="ident">parent</span>: <span class="prelude-val">None</span>,
                     <span class="ident">children</span>: <span class="ident">Vec::new</span>(),
                     <span class="ident">exit_code</span>: <span class="number">0</span>,
+                    <span class="ident">fd_table</span>: <span class="macro">alloc::vec!</span>[
+                        <span class="comment">// 0 -&gt; stdin</span>
+                        <span class="prelude-val">Some</span>(<span class="ident">Arc::new</span>(<span class="ident">Stdin</span>)),
+                        <span class="comment">// 1 -&gt; stdout</span>
+                        <span class="prelude-val">Some</span>(<span class="ident">Arc::new</span>(<span class="ident">Stdout</span>)),
+                        <span class="comment">// 2 -&gt; stderr</span>
+                        <span class="prelude-val">Some</span>(<span class="ident">Arc::new</span>(<span class="ident">Stdout</span>)),
+                    ],
                 })
             },
         };
@@ -337,6 +384,14 @@
         <span class="kw">let</span> <span class="ident">pid_handle</span> <span class="op">=</span> <span class="ident">pid_alloc</span>();
         <span class="kw">let</span> <span class="ident">kernel_stack</span> <span class="op">=</span> <span class="ident">KernelStack::new</span>(<span class="kw-2">&amp;</span><span class="ident">pid_handle</span>);
         <span class="kw">let</span> <span class="ident">kernel_stack_top</span> <span class="op">=</span> <span class="ident">kernel_stack</span>.<span class="ident">get_top</span>();
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new_fd_table</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Arc</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">File</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Vec::new</span>();
+        <span class="kw">for</span> <span class="ident">fd</span> <span class="kw">in</span> <span class="ident">parent_inner</span>.<span class="ident">fd_table</span>.<span class="ident">iter</span>() {
+            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">file</span>) <span class="op">=</span> <span class="ident">fd</span> {
+                <span class="ident">new_fd_table</span>.<span class="ident">push</span>(<span class="prelude-val">Some</span>(<span class="ident">file</span>.<span class="ident">clone</span>()));
+            } <span class="kw">else</span> {
+                <span class="ident">new_fd_table</span>.<span class="ident">push</span>(<span class="prelude-val">None</span>);
+            }
+        }
         <span class="kw">let</span> <span class="ident">task_control_block</span> <span class="op">=</span> <span class="ident">Arc::new</span>(<span class="ident">TaskControlBlock</span> {
             <span class="ident">pid</span>: <span class="ident">pid_handle</span>,
             <span class="ident">kernel_stack</span>,
@@ -350,6 +405,7 @@
                     <span class="ident">parent</span>: <span class="prelude-val">Some</span>(<span class="ident">Arc::downgrade</span>(<span class="self">self</span>)),
                     <span class="ident">children</span>: <span class="ident">Vec::new</span>(),
                     <span class="ident">exit_code</span>: <span class="number">0</span>,
+                    <span class="ident">fd_table</span>: <span class="ident">new_fd_table</span>,
                 })
             },
         });
