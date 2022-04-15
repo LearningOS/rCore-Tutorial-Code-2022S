@@ -23,10 +23,6 @@ BASE ?= 1
 
 build: env $(KERNEL_BIN)
 
-$(KERNEL_BIN): kernel
-	@$(OBJCOPY) $(KERNEL_ELF) --strip-all -O binary $@
-	@$(OBJDUMP) $(KERNEL_ELF) -S > $(KERNEL_ELF).asm
-
 env:
 	(rustup target list | grep "riscv64gc-unknown-none-elf (installed)") || rustup target add $(TARGET)
 	cargo install cargo-binutils --vers ~0.3
@@ -35,6 +31,7 @@ env:
 
 $(KERNEL_BIN): kernel
 	@$(OBJCOPY) $(KERNEL_ELF) --strip-all -O binary $@
+	@$(OBJDUMP) $(KERNEL_ELF) -S > $(KERNEL_ELF).asm
 
 kernel:
 	@make -C ../user build TEST=$(TEST) CHAPTER=$(CHAPTER) BASE=$(BASE)
