@@ -151,19 +151,6 @@
 <span id="146">146</span>
 <span id="147">147</span>
 <span id="148">148</span>
-<span id="149">149</span>
-<span id="150">150</span>
-<span id="151">151</span>
-<span id="152">152</span>
-<span id="153">153</span>
-<span id="154">154</span>
-<span id="155">155</span>
-<span id="156">156</span>
-<span id="157">157</span>
-<span id="158">158</span>
-<span id="159">159</span>
-<span id="160">160</span>
-<span id="161">161</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Process management syscalls</span>
 
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::mm</span>::{<span class="ident">translated_refmut</span>, <span class="ident">translated_ref</span>, <span class="ident">translated_str</span>};
@@ -224,27 +211,14 @@
 }
 
 <span class="doccomment">/// Syscall Exec which accepts the elf path</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sys_exec</span>(<span class="ident">path</span>: <span class="kw-2">*const</span> <span class="ident">u8</span>, <span class="kw-2">mut</span> <span class="ident">args</span>: <span class="kw-2">*const</span> <span class="ident">usize</span>) -&gt; <span class="ident">isize</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sys_exec</span>(<span class="ident">path</span>: <span class="kw-2">*const</span> <span class="ident">u8</span>) -&gt; <span class="ident">isize</span> {
     <span class="kw">let</span> <span class="ident">token</span> <span class="op">=</span> <span class="ident">current_user_token</span>();
     <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="ident">translated_str</span>(<span class="ident">token</span>, <span class="ident">path</span>);
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">args_vec</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Vec::new</span>();
-    <span class="kw">loop</span> {
-        <span class="kw">let</span> <span class="ident">arg_str_ptr</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">translated_ref</span>(<span class="ident">token</span>, <span class="ident">args</span>);
-        <span class="kw">if</span> <span class="ident">arg_str_ptr</span> <span class="op">==</span> <span class="number">0</span> {
-            <span class="kw">break</span>;
-        }
-        <span class="ident">args_vec</span>.<span class="ident">push</span>(<span class="ident">translated_str</span>(<span class="ident">token</span>, <span class="ident">arg_str_ptr</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">u8</span>));
-        <span class="kw">unsafe</span> {
-            <span class="ident">args</span> <span class="op">=</span> <span class="ident">args</span>.<span class="ident">add</span>(<span class="number">1</span>);
-        }
-    }
     <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">app_inode</span>) <span class="op">=</span> <span class="ident">open_file</span>(<span class="ident">path</span>.<span class="ident">as_str</span>(), <span class="ident">OpenFlags::RDONLY</span>) {
         <span class="kw">let</span> <span class="ident">all_data</span> <span class="op">=</span> <span class="ident">app_inode</span>.<span class="ident">read_all</span>();
         <span class="kw">let</span> <span class="ident">task</span> <span class="op">=</span> <span class="ident">current_task</span>().<span class="ident">unwrap</span>();
-        <span class="kw">let</span> <span class="ident">argc</span> <span class="op">=</span> <span class="ident">args_vec</span>.<span class="ident">len</span>();
-        <span class="ident">task</span>.<span class="ident">exec</span>(<span class="ident">all_data</span>.<span class="ident">as_slice</span>(), <span class="ident">args_vec</span>);
-        <span class="comment">// return argc because cx.x[10] will be covered with it later</span>
-        <span class="ident">argc</span> <span class="kw">as</span> <span class="ident">isize</span>
+        <span class="ident">task</span>.<span class="ident">exec</span>(<span class="ident">all_data</span>.<span class="ident">as_slice</span>());
+        <span class="number">0</span>
     } <span class="kw">else</span> {
         <span class="op">-</span><span class="number">1</span>
     }
@@ -326,5 +300,5 @@
     <span class="op">-</span><span class="number">1</span>
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="os" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.62.0-nightly (34a6c9f26 2022-04-13)" ></div>
+</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="os" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.62.0-nightly (e7575f967 2022-04-14)" ></div>
 </body></html>
