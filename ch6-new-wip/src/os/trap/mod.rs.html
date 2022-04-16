@@ -197,7 +197,7 @@
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cx</span> <span class="op">=</span> <span class="ident">current_trap_cx</span>();
             <span class="ident">cx</span>.<span class="ident">sepc</span> <span class="op">+</span><span class="op">=</span> <span class="number">4</span>;
             <span class="comment">// get system call return value</span>
-            <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">syscall</span>(<span class="ident">cx</span>.<span class="ident">x</span>[<span class="number">17</span>], [<span class="ident">cx</span>.<span class="ident">x</span>[<span class="number">10</span>], <span class="ident">cx</span>.<span class="ident">x</span>[<span class="number">11</span>], <span class="ident">cx</span>.<span class="ident">x</span>[<span class="number">12</span>]]);
+            <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">syscall</span>(<span class="ident">cx</span>.<span class="ident">x</span>[<span class="number">17</span>], [<span class="ident">cx</span>.<span class="ident">x</span>[<span class="number">10</span>], <span class="ident">cx</span>.<span class="ident">x</span>[<span class="number">11</span>], <span class="ident">cx</span>.<span class="ident">x</span>[<span class="number">12</span>], <span class="ident">cx</span>.<span class="ident">x</span>[<span class="number">13</span>]]);
             <span class="comment">// cx is changed during sys_exec, so we have to call it again</span>
             <span class="ident">cx</span> <span class="op">=</span> <span class="ident">current_trap_cx</span>();
             <span class="ident">cx</span>.<span class="ident">x</span>[<span class="number">10</span>] <span class="op">=</span> <span class="ident">result</span> <span class="kw">as</span> <span class="ident">usize</span>;
@@ -266,5 +266,5 @@
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">context::TrapContext</span>;
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="os" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.62.0-nightly (e7575f967 2022-04-14)" ></div>
+</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="os" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.62.0-nightly (3f391b845 2022-04-15)" ></div>
 </body></html>
