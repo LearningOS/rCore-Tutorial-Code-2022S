@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["inode",""],["stdio",""]],"struct":[["Stat",""],["StatMode",""]],"trait":[["File",""]]});
