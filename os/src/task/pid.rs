@@ -11,7 +11,9 @@ use lazy_static::*;
 
 /// Process identifier allocator using stack allocation
 struct PidAllocator {
+    /// A new PID to be assigned
     current: usize,
+    /// Recycled PID sequence
     recycled: Vec<usize>,
 }
 

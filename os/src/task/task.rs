@@ -15,7 +15,9 @@ use core::cell::RefMut;
 /// Directly save the contents that will not change during running
 pub struct TaskControlBlock {
     // immutable
+    /// Process identifier
     pub pid: PidHandle,
+    /// Kernel stack corresponding to PID
     pub kernel_stack: KernelStack,
     // mutable
     inner: UPSafeCell<TaskControlBlockInner>,
@@ -26,13 +28,23 @@ pub struct TaskControlBlock {
 /// Store the contents that will change during operation
 /// and are wrapped by UPSafeCell to provide mutual exclusion
 pub struct TaskControlBlockInner {
+    /// The physical page number of the frame where the trap context is placed
     pub trap_cx_ppn: PhysPageNum,
+    /// Application data can only appear in areas
+    /// where the application address space is lower than base_size
     pub base_size: usize,
+    /// Save task context
     pub task_cx: TaskContext,
+    /// Maintain the execution status of the current process
     pub task_status: TaskStatus,
+    /// Application address space
     pub memory_set: MemorySet,
+    /// Parent process of the current process.
+    /// Weak will not affect the reference count of the parent
     pub parent: Option<Weak<TaskControlBlock>>,
+    /// A vector containing TCBs of all child processes of the current process
     pub children: Vec<Arc<TaskControlBlock>>,
+    /// It is set when active exit or execution error occurs
     pub exit_code: i32,
 }
 

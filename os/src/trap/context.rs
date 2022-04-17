@@ -5,11 +5,17 @@ use riscv::register::sstatus::{self, Sstatus, SPP};
 #[repr(C)]
 /// trap context structure containing sstatus, sepc and registers
 pub struct TrapContext {
+    /// General-Purpose Register x0-31
     pub x: [usize; 32],
+    /// sstatus
     pub sstatus: Sstatus,
+    /// sepc
     pub sepc: usize,
+    /// Token of kernel address space
     pub kernel_satp: usize,
+    /// Kernel stack pointer of the current application
     pub kernel_sp: usize,
+    /// Virtual address of trap handler entry point in kernel
     pub trap_handler: usize,
 }
 

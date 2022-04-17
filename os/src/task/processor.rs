@@ -15,6 +15,7 @@ use lazy_static::*;
 
 /// Processor management structure
 pub struct Processor {
+    /// The task currently executing on the current processor
     current: Option<Arc<TaskControlBlock>>,
     /// The basic control flow of each core, helping to select and switch process
     idle_task_cx: TaskContext,
@@ -78,12 +79,14 @@ pub fn current_task() -> Option<Arc<TaskControlBlock>> {
     PROCESSOR.exclusive_access().current()
 }
 
+/// Get token of the address space of current task
 pub fn current_user_token() -> usize {
     let task = current_task().unwrap();
     let token = task.inner_exclusive_access().get_user_token();
     token
 }
 
+/// Get the mutable reference to trap context of current task
 pub fn current_trap_cx() -> &'static mut TrapContext {
     current_task()
         .unwrap()
