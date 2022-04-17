@@ -105,6 +105,9 @@
 <span id="100">100</span>
 <span id="101">101</span>
 <span id="102">102</span>
+<span id="103">103</span>
+<span id="104">104</span>
+<span id="105">105</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Implementation of [`Processor`] and Intersection of control flow</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! Here, the continuous operation of user apps in CPU is maintained,</span>
@@ -122,6 +125,7 @@
 
 <span class="doccomment">/// Processor management structure</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Processor</span> {
+    <span class="doccomment">/// The task currently executing on the current processor</span>
     <span class="ident">current</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">TaskControlBlock</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="doccomment">/// The basic control flow of each core, helping to select and switch process</span>
     <span class="ident">idle_task_cx</span>: <span class="ident">TaskContext</span>,
@@ -185,12 +189,14 @@
     <span class="ident">PROCESSOR</span>.<span class="ident">exclusive_access</span>().<span class="ident">current</span>()
 }
 
+<span class="doccomment">/// Get token of the address space of current task</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">current_user_token</span>() -&gt; <span class="ident">usize</span> {
     <span class="kw">let</span> <span class="ident">task</span> <span class="op">=</span> <span class="ident">current_task</span>().<span class="ident">unwrap</span>();
     <span class="kw">let</span> <span class="ident">token</span> <span class="op">=</span> <span class="ident">task</span>.<span class="ident">inner_exclusive_access</span>().<span class="ident">get_user_token</span>();
     <span class="ident">token</span>
 }
 
+<span class="doccomment">/// Get the mutable reference to trap context of current task</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">current_trap_cx</span>() -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="kw-2">mut</span> <span class="ident">TrapContext</span> {
     <span class="ident">current_task</span>()
         .<span class="ident">unwrap</span>()
@@ -208,5 +214,5 @@
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="os" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.62.0-nightly (e7575f967 2022-04-14)" ></div>
+</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="os" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.62.0-nightly (878c7833f 2022-04-16)" ></div>
 </body></html>

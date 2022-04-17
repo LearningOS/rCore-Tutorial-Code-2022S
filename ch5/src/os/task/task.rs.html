@@ -190,6 +190,18 @@
 <span id="185">185</span>
 <span id="186">186</span>
 <span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Types related to task management &amp; Functions for completely changing TCB</span>
 
 <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::TaskContext</span>;
@@ -207,7 +219,9 @@
 <span class="doccomment">/// Directly save the contents that will not change during running</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TaskControlBlock</span> {
     <span class="comment">// immutable</span>
+    <span class="doccomment">/// Process identifier</span>
     <span class="kw">pub</span> <span class="ident">pid</span>: <span class="ident">PidHandle</span>,
+    <span class="doccomment">/// Kernel stack corresponding to PID</span>
     <span class="kw">pub</span> <span class="ident">kernel_stack</span>: <span class="ident">KernelStack</span>,
     <span class="comment">// mutable</span>
     <span class="ident">inner</span>: <span class="ident">UPSafeCell</span><span class="op">&lt;</span><span class="ident">TaskControlBlockInner</span><span class="op">&gt;</span>,
@@ -218,13 +232,23 @@
 <span class="doccomment">/// Store the contents that will change during operation</span>
 <span class="doccomment">/// and are wrapped by UPSafeCell to provide mutual exclusion</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TaskControlBlockInner</span> {
+    <span class="doccomment">/// The physical page number of the frame where the trap context is placed</span>
     <span class="kw">pub</span> <span class="ident">trap_cx_ppn</span>: <span class="ident">PhysPageNum</span>,
+    <span class="doccomment">/// Application data can only appear in areas</span>
+    <span class="doccomment">/// where the application address space is lower than base_size</span>
     <span class="kw">pub</span> <span class="ident">base_size</span>: <span class="ident">usize</span>,
+    <span class="doccomment">/// Save task context</span>
     <span class="kw">pub</span> <span class="ident">task_cx</span>: <span class="ident">TaskContext</span>,
+    <span class="doccomment">/// Maintain the execution status of the current process</span>
     <span class="kw">pub</span> <span class="ident">task_status</span>: <span class="ident">TaskStatus</span>,
+    <span class="doccomment">/// Application address space</span>
     <span class="kw">pub</span> <span class="ident">memory_set</span>: <span class="ident">MemorySet</span>,
+    <span class="doccomment">/// Parent process of the current process.</span>
+    <span class="doccomment">/// Weak will not affect the reference count of the parent</span>
     <span class="kw">pub</span> <span class="ident">parent</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Weak</span><span class="op">&lt;</span><span class="ident">TaskControlBlock</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// A vector containing TCBs of all child processes of the current process</span>
     <span class="kw">pub</span> <span class="ident">children</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">TaskControlBlock</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// It is set when active exit or execution error occurs</span>
     <span class="kw">pub</span> <span class="ident">exit_code</span>: <span class="ident">i32</span>,
 }
 
@@ -378,5 +402,5 @@
     <span class="ident">Zombie</span>,
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="os" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.62.0-nightly (e7575f967 2022-04-14)" ></div>
+</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="os" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.62.0-nightly (878c7833f 2022-04-16)" ></div>
 </body></html>
