@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["list_apps","List all files in the filesystems"],["open_file","Open a file by path"]],"struct":[["OSInode","A wrapper around a filesystem inode to implement File trait atop"],["OSInodeInner","The OS inode inner in ‘UPSafeCell’"],["OpenFlags","Flags for opening files"],["ROOT_INODE","The root of all inodes, or ‘/’ in short"]]});
