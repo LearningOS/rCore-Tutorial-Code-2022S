@@ -406,6 +406,7 @@
 <span id="401">401</span>
 <span id="402">402</span>
 <span id="403">403</span>
+<span id="404">404</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Implementation of [`MapArea`] and [`MemorySet`].</span>
 
 <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">frame_alloc</span>, <span class="ident">FrameTracker</span>};
@@ -439,6 +440,7 @@
         <span class="ident">Arc::new</span>(<span class="kw">unsafe</span> { <span class="ident">UPSafeCell::new</span>(<span class="ident">MemorySet::new_kernel</span>()) });
 }
 
+<span class="doccomment">/// Get the token of the kernel memory space</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">kernel_token</span>() -&gt; <span class="ident">usize</span> {
     <span class="ident">KERNEL_SPACE</span>.<span class="ident">exclusive_access</span>().<span class="ident">token</span>()
 }
@@ -810,5 +812,5 @@
     <span class="macro">info!</span>(<span class="string">&quot;remap_test passed!&quot;</span>);
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="os" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.62.0-nightly (3f391b845 2022-04-15)" ></div>
+</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="os" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.62.0-nightly (878c7833f 2022-04-16)" ></div>
 </body></html>

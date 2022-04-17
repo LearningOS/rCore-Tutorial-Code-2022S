@@ -258,6 +258,11 @@
 <span id="253">253</span>
 <span id="254">254</span>
 <span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
+<span id="258">258</span>
+<span id="259">259</span>
+<span id="260">260</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Implementation of [`PageTableEntry`] and [`PageTable`].</span>
 
 <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">frame_alloc</span>, <span class="ident">FrameTracker</span>, <span class="ident">PhysAddr</span>, <span class="ident">PhysPageNum</span>, <span class="ident">StepByOne</span>, <span class="ident">VirtAddr</span>, <span class="ident">VirtPageNum</span>};
@@ -462,14 +467,17 @@
         .<span class="ident">get_mut</span>()
 }
 
+<span class="doccomment">/// An abstraction over a buffer passed from user space to kernel space</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">UserBuffer</span> {
     <span class="kw">pub</span> <span class="ident">buffers</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="kw-2">mut</span> [<span class="ident">u8</span>]<span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">UserBuffer</span> {
+    <span class="doccomment">/// Constuct a UserBuffer</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">buffers</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="kw-2">mut</span> [<span class="ident">u8</span>]<span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
         <span class="self">Self</span> { <span class="ident">buffers</span> }
     }
+    <span class="doccomment">/// Get the length of a UserBuffer</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">usize</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">total</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">0</span>;
         <span class="kw">for</span> <span class="ident">b</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">buffers</span>.<span class="ident">iter</span>() {
@@ -478,6 +486,7 @@
         <span class="ident">total</span>
     }
 }
+
 <span class="kw">impl</span> <span class="ident">IntoIterator</span> <span class="kw">for</span> <span class="ident">UserBuffer</span> {
     <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="kw-2">*mut</span> <span class="ident">u8</span>;
     <span class="kw">type</span> <span class="ident">IntoIter</span> <span class="op">=</span> <span class="ident">UserBufferIterator</span>;
@@ -490,6 +499,7 @@
     }
 }
 
+<span class="comment">// An iterator over a UserBuffer</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">UserBufferIterator</span> {
     <span class="ident">buffers</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="kw-2">mut</span> [<span class="ident">u8</span>]<span class="op">&gt;</span>,
     <span class="ident">current_buffer</span>: <span class="ident">usize</span>,
@@ -514,5 +524,5 @@
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="os" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.62.0-nightly (3f391b845 2022-04-15)" ></div>
+</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="os" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.62.0-nightly (878c7833f 2022-04-16)" ></div>
 </body></html>

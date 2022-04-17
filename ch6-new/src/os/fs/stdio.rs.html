@@ -50,13 +50,15 @@
 <span id="45">45</span>
 <span id="46">46</span>
 <span id="47">47</span>
+<span id="48">48</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident"><span class="kw">super</span>::File</span>;
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::mm</span>::{<span class="ident">UserBuffer</span>};
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::sbi::console_getchar</span>;
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::task::suspend_current_and_run_next</span>;
 
+<span class="doccomment">/// The standard input</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Stdin</span>;
-
+<span class="doccomment">/// The standard output</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Stdout</span>;
 
 <span class="kw">impl</span> <span class="ident">File</span> <span class="kw">for</span> <span class="ident">Stdin</span> {
@@ -96,6 +98,7 @@
         }
         <span class="ident">user_buf</span>.<span class="ident">len</span>()
     }
-}</code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="os" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.62.0-nightly (3f391b845 2022-04-15)" ></div>
+}
+</code></pre></div>
+</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="os" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.62.0-nightly (878c7833f 2022-04-16)" ></div>
 </body></html>
