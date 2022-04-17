@@ -178,15 +178,15 @@
 }
 
 <span class="comment">// YOUR JOB: 扩展 easy-fs 和内核以实现以下三个 syscall</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sys_fstat</span>(<span class="ident">_fd</span>: <span class="ident">usize</span>, <span class="ident">_st</span>: <span class="kw-2">*mut</span> <span class="ident">Stat</span>) -&gt; <span class="ident">isize</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sys_fstat</span>(<span class="ident">_fd</span>: <span class="kw-2">*const</span> <span class="ident">u8</span>, <span class="ident">_st</span>: <span class="kw-2">*mut</span> <span class="ident">Stat</span>) -&gt; <span class="ident">isize</span> {
    <span class="op">-</span><span class="number">1</span>
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sys_linkat</span>(<span class="ident">_old_name</span>: <span class="ident">usize</span>, <span class="ident">_new_name</span>: <span class="ident">usize</span>) -&gt; <span class="ident">isize</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sys_linkat</span>(<span class="ident">_old_name</span>: <span class="kw-2">*const</span> <span class="ident">u8</span>, <span class="ident">_new_name</span>: <span class="kw-2">*const</span> <span class="ident">u8</span>) -&gt; <span class="ident">isize</span> {
     <span class="op">-</span><span class="number">1</span>
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sys_unlinkat</span>(<span class="ident">_name</span>: <span class="ident">usize</span>) -&gt; <span class="ident">isize</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sys_unlinkat</span>(<span class="ident">_name</span>: <span class="kw-2">*const</span> <span class="ident">u8</span>) -&gt; <span class="ident">isize</span> {
     <span class="op">-</span><span class="number">1</span>
 }
 </code></pre></div>
