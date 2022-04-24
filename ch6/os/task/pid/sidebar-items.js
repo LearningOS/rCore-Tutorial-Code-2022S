@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["kernel_stack_position","Return (bottom, top) of a kernel stack in kernel space."],["pid_alloc",""]],"struct":[["KernelStack","KernelStack corresponding to PID"],["PID_ALLOCATOR","Pid allocator instance through lazy_static!"],["PidAllocator","Process identifier allocator using stack allocation"],["PidHandle","Abstract structure of PID"]]});
