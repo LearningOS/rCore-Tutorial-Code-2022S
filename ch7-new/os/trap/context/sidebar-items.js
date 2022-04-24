@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["TrapContext","trap context structure containing sstatus, sepc and registers"]]});
