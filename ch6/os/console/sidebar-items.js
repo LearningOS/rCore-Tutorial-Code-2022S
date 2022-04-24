@@ -1,1 +1,0 @@
-initSidebarItems({"enum":[["ANSICON",""]],"fn":[["print",""],["print_colorized",""]],"struct":[["Stdout",""]]});

@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["TaskContext","task context structure containing some registers"]]});
