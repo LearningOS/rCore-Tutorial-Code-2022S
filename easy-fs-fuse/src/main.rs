@@ -1,15 +1,13 @@
-use easy_fs::{
-    BlockDevice,
-    EasyFileSystem,
-};
-use std::fs::{File, OpenOptions, read_dir};
-use std::io::{Read, Write, Seek, SeekFrom};
-use std::sync::Mutex;
+use clap::{App, Arg};
+use easy_fs::{BlockDevice, EasyFileSystem};
+use std::fs::{read_dir, File, OpenOptions};
+use std::io::{Read, Seek, SeekFrom, Write};
 use std::sync::Arc;
-use clap::{Arg, App};
+use std::sync::Mutex;
 
 /// Use a block size of 512 bytes
 const BLOCK_SZ: usize = 512;
+const BLOCK_NUM: usize = 16384;
 
 /// Wrapper for turning a File into a BlockDevice
 struct BlockFile(Mutex<File>);
@@ -38,17 +36,19 @@ fn main() {
 /// Pack a directory into a easy-fs disk image
 fn easy_fs_pack() -> std::io::Result<()> {
     let matches = App::new("EasyFileSystem packer")
-        .arg(Arg::with_name("source")
-            .short("s")
-            .long("source")
-            .takes_value(true)
-            .help("Executable source dir(with backslash)")
+        .arg(
+            Arg::with_name("source")
+                .short("s")
+                .long("source")
+                .takes_value(true)
+                .help("Executable source dir(with backslash)"),
         )
-        .arg(Arg::with_name("target")
-            .short("t")
-            .long("target")
-            .takes_value(true)
-            .help("Executable target dir(with backslash)")    
+        .arg(
+            Arg::with_name("target")
+                .short("t")
+                .long("target")
+                .takes_value(true)
+                .help("Executable target dir(with backslash)"),
         )
         .get_matches();
     let src_path = matches.value_of("source").unwrap();
@@ -60,14 +60,10 @@ fn easy_fs_pack() -> std::io::Result<()> {
             .write(true)
             .create(true)
             .open(format!("{}{}", target_path, "fs.img"))?;
-        f.set_len(16384 * 512).unwrap();
+        f.set_len((BLOCK_NUM * BLOCK_SZ) as u64).unwrap();
         f
     })));
-    let efs = EasyFileSystem::create(
-        block_file.clone(),
-        16384,
-        1,
-    );
+    let efs = EasyFileSystem::create(block_file.clone(), BLOCK_NUM as u32, 1);
     let root_inode = Arc::new(EasyFileSystem::root_inode(&efs));
     let apps: Vec<_> = read_dir(src_path)
         .unwrap()
@@ -103,14 +99,10 @@ fn efs_test() -> std::io::Result<()> {
             .write(true)
             .create(true)
             .open("target/fs.img")?;
-        f.set_len(16384 * 512).unwrap();
+        f.set_len(BLOCK_NUM * BLOCK_SZ).unwrap();
         f
     })));
-    EasyFileSystem::create(
-        block_file.clone(),
-        4096,
-        1,
-    );
+    EasyFileSystem::create(block_file.clone(), 4096, 1);
     let efs = EasyFileSystem::open(block_file.clone());
     let root_inode = EasyFileSystem::root_inode(&efs);
     root_inode.create("filea");
@@ -121,20 +113,14 @@ fn efs_test() -> std::io::Result<()> {
     let filea = root_inode.find("filea").unwrap();
     let greet_str = "Hello, world!";
     filea.write_at(0, greet_str.as_bytes());
-    //let mut buffer = [0u8; 512];
+    //let mut buffer = [0u8; BLOCK_SZ];
     let mut buffer = [0u8; 233];
     let len = filea.read_at(0, &mut buffer);
-    assert_eq!(
-        greet_str,
-        core::str::from_utf8(&buffer[..len]).unwrap(),
-    );
+    assert_eq!(greet_str, core::str::from_utf8(&buffer[..len]).unwrap(),);
 
     let mut random_str_test = |len: usize| {
         filea.clear();
-        assert_eq!(
-            filea.read_at(0, &mut buffer),
-            0,
-        );
+        assert_eq!(filea.read_at(0, &mut buffer), 0,);
         let mut str = String::new();
         use rand;
         // random digit
@@ -151,9 +137,7 @@ fn efs_test() -> std::io::Result<()> {
                 break;
             }
             offset += len;
-            read_str.push_str(
-                core::str::from_utf8(&read_buffer[..len]).unwrap()
-            );
+            read_str.push_str(core::str::from_utf8(&read_buffer[..len]).unwrap());
         }
         assert_eq!(str, read_str);
     };
