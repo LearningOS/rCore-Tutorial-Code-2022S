@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["inode",""],["pipe",""],["stdio",""]],"struct":[["Stat","The stat of a inode"],["StatMode","The mode of a inode whether a directory or a file"]],"trait":[["File","The common abstraction of all IO resources"]]});

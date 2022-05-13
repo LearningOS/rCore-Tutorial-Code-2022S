@@ -1,0 +1,1 @@
+initSidebarItems({"constant":[["MICRO_PER_SEC",""],["MILLI_PER_SEC",""],["TICKS_PER_SEC",""]],"fn":[["add_timer",""],["check_timer",""],["get_time","read the `mtime` register"],["get_time_ms","get current time in milliseconds"],["get_time_us","get current time in microseconds"],["set_next_trigger","set the next timer interrupt"]],"struct":[["TIMERS",""],["TimerCondVar",""]]});
