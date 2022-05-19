@@ -127,6 +127,7 @@
 <span class="kw">const</span> <span class="ident">SYSCALL_YIELD</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">124</span>;
 <span class="kw">const</span> <span class="ident">SYSCALL_GET_TIME</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">169</span>;
 <span class="kw">const</span> <span class="ident">SYSCALL_GETPID</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">172</span>;
+<span class="kw">const</span> <span class="ident">SYSCALL_GETTID</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">178</span>;
 <span class="kw">const</span> <span class="ident">SYSCALL_FORK</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">220</span>;
 <span class="kw">const</span> <span class="ident">SYSCALL_EXEC</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">221</span>;
 <span class="kw">const</span> <span class="ident">SYSCALL_WAITPID</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">260</span>;
@@ -135,18 +136,17 @@
 <span class="kw">const</span> <span class="ident">SYSCALL_MMAP</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">222</span>;
 <span class="kw">const</span> <span class="ident">SYSCALL_SET_PRIORITY</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">140</span>;
 <span class="kw">const</span> <span class="ident">SYSCALL_TASK_INFO</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">410</span>;
-<span class="kw">const</span> <span class="ident">SYSCALL_THREAD_CREATE</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">420</span>;
-<span class="kw">const</span> <span class="ident">SYSCALL_GETTID</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">421</span>;
-<span class="kw">const</span> <span class="ident">SYSCALL_WAITTID</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">422</span>;
-<span class="kw">const</span> <span class="ident">SYSCALL_MUTEX_CREATE</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">430</span>;
-<span class="kw">const</span> <span class="ident">SYSCALL_MUTEX_LOCK</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">431</span>;
-<span class="kw">const</span> <span class="ident">SYSCALL_MUTEX_UNLOCK</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">432</span>;
-<span class="kw">const</span> <span class="ident">SYSCALL_SEMAPHORE_CREATE</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">440</span>;
-<span class="kw">const</span> <span class="ident">SYSCALL_SEMAPHORE_UP</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">441</span>;
-<span class="kw">const</span> <span class="ident">SYSCALL_SEMAPHORE_DOWN</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">442</span>;
-<span class="kw">const</span> <span class="ident">SYSCALL_CONDVAR_CREATE</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">450</span>;
-<span class="kw">const</span> <span class="ident">SYSCALL_CONDVAR_SIGNAL</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">451</span>;
-<span class="kw">const</span> <span class="ident">SYSCALL_CONDVAR_WAIT</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">452</span>;
+<span class="kw">const</span> <span class="ident">SYSCALL_THREAD_CREATE</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">460</span>;
+<span class="kw">const</span> <span class="ident">SYSCALL_WAITTID</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">462</span>;
+<span class="kw">const</span> <span class="ident">SYSCALL_MUTEX_CREATE</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">463</span>;
+<span class="kw">const</span> <span class="ident">SYSCALL_MUTEX_LOCK</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">464</span>;
+<span class="kw">const</span> <span class="ident">SYSCALL_MUTEX_UNLOCK</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">466</span>;
+<span class="kw">const</span> <span class="ident">SYSCALL_SEMAPHORE_CREATE</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">467</span>;
+<span class="kw">const</span> <span class="ident">SYSCALL_SEMAPHORE_UP</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">468</span>;
+<span class="kw">const</span> <span class="ident">SYSCALL_SEMAPHORE_DOWN</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">470</span>;
+<span class="kw">const</span> <span class="ident">SYSCALL_CONDVAR_CREATE</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">471</span>;
+<span class="kw">const</span> <span class="ident">SYSCALL_CONDVAR_SIGNAL</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">472</span>;
+<span class="kw">const</span> <span class="ident">SYSCALL_CONDVAR_WAIT</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">473</span>;
 
 <span class="kw">mod</span> <span class="ident">fs</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">process</span>;
@@ -175,6 +175,7 @@
         <span class="ident">SYSCALL_SLEEP</span> =&gt; <span class="ident">sys_sleep</span>(<span class="ident">args</span>[<span class="number">0</span>]),
         <span class="ident">SYSCALL_YIELD</span> =&gt; <span class="ident">sys_yield</span>(),
         <span class="ident">SYSCALL_GETPID</span> =&gt; <span class="ident">sys_getpid</span>(),
+        <span class="ident">SYSCALL_GETTID</span> =&gt; <span class="ident">sys_gettid</span>(),
         <span class="ident">SYSCALL_FORK</span> =&gt; <span class="ident">sys_fork</span>(),
         <span class="ident">SYSCALL_EXEC</span> =&gt; <span class="ident">sys_exec</span>(<span class="ident">args</span>[<span class="number">0</span>] <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">u8</span>, <span class="ident">args</span>[<span class="number">1</span>] <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">usize</span>),
         <span class="ident">SYSCALL_WAITPID</span> =&gt; <span class="ident">sys_waitpid</span>(<span class="ident">args</span>[<span class="number">0</span>] <span class="kw">as</span> <span class="ident">isize</span>, <span class="ident">args</span>[<span class="number">1</span>] <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="ident">i32</span>),
@@ -185,7 +186,6 @@
         <span class="ident">SYSCALL_TASK_INFO</span> =&gt; <span class="ident">sys_task_info</span>(<span class="ident">args</span>[<span class="number">0</span>] <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="ident">TaskInfo</span>),
         <span class="ident">SYSCALL_SPAWN</span> =&gt; <span class="ident">sys_spawn</span>(<span class="ident">args</span>[<span class="number">0</span>] <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">u8</span>),
         <span class="ident">SYSCALL_THREAD_CREATE</span> =&gt; <span class="ident">sys_thread_create</span>(<span class="ident">args</span>[<span class="number">0</span>], <span class="ident">args</span>[<span class="number">1</span>]),
-        <span class="ident">SYSCALL_GETTID</span> =&gt; <span class="ident">sys_gettid</span>(),
         <span class="ident">SYSCALL_WAITTID</span> =&gt; <span class="ident">sys_waittid</span>(<span class="ident">args</span>[<span class="number">0</span>]) <span class="kw">as</span> <span class="ident">isize</span>,
         <span class="ident">SYSCALL_MUTEX_CREATE</span> =&gt; <span class="ident">sys_mutex_create</span>(<span class="ident">args</span>[<span class="number">0</span>] <span class="op">==</span> <span class="number">1</span>),
         <span class="ident">SYSCALL_MUTEX_LOCK</span> =&gt; <span class="ident">sys_mutex_lock</span>(<span class="ident">args</span>[<span class="number">0</span>]),
