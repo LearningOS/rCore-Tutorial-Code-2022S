@@ -24,6 +24,7 @@ const SYSCALL_SLEEP: usize = 101;
 const SYSCALL_YIELD: usize = 124;
 const SYSCALL_GET_TIME: usize = 169;
 const SYSCALL_GETPID: usize = 172;
+const SYSCALL_GETTID: usize = 178;
 const SYSCALL_FORK: usize = 220;
 const SYSCALL_EXEC: usize = 221;
 const SYSCALL_WAITPID: usize = 260;
@@ -32,18 +33,17 @@ const SYSCALL_MUNMAP: usize = 215;
 const SYSCALL_MMAP: usize = 222;
 const SYSCALL_SET_PRIORITY: usize = 140;
 const SYSCALL_TASK_INFO: usize = 410;
-const SYSCALL_THREAD_CREATE: usize = 420;
-const SYSCALL_GETTID: usize = 421;
-const SYSCALL_WAITTID: usize = 422;
-const SYSCALL_MUTEX_CREATE: usize = 430;
-const SYSCALL_MUTEX_LOCK: usize = 431;
-const SYSCALL_MUTEX_UNLOCK: usize = 432;
-const SYSCALL_SEMAPHORE_CREATE: usize = 440;
-const SYSCALL_SEMAPHORE_UP: usize = 441;
-const SYSCALL_SEMAPHORE_DOWN: usize = 442;
-const SYSCALL_CONDVAR_CREATE: usize = 450;
-const SYSCALL_CONDVAR_SIGNAL: usize = 451;
-const SYSCALL_CONDVAR_WAIT: usize = 452;
+const SYSCALL_THREAD_CREATE: usize = 460;
+const SYSCALL_WAITTID: usize = 462;
+const SYSCALL_MUTEX_CREATE: usize = 463;
+const SYSCALL_MUTEX_LOCK: usize = 464;
+const SYSCALL_MUTEX_UNLOCK: usize = 466;
+const SYSCALL_SEMAPHORE_CREATE: usize = 467;
+const SYSCALL_SEMAPHORE_UP: usize = 468;
+const SYSCALL_SEMAPHORE_DOWN: usize = 470;
+const SYSCALL_CONDVAR_CREATE: usize = 471;
+const SYSCALL_CONDVAR_SIGNAL: usize = 472;
+const SYSCALL_CONDVAR_WAIT: usize = 473;
 
 mod fs;
 pub mod process;
@@ -72,6 +72,7 @@ pub fn syscall(syscall_id: usize, args: [usize; 4]) -> isize {
         SYSCALL_SLEEP => sys_sleep(args[0]),
         SYSCALL_YIELD => sys_yield(),
         SYSCALL_GETPID => sys_getpid(),
+        SYSCALL_GETTID => sys_gettid(),
         SYSCALL_FORK => sys_fork(),
         SYSCALL_EXEC => sys_exec(args[0] as *const u8, args[1] as *const usize),
         SYSCALL_WAITPID => sys_waitpid(args[0] as isize, args[1] as *mut i32),
@@ -82,7 +83,6 @@ pub fn syscall(syscall_id: usize, args: [usize; 4]) -> isize {
         SYSCALL_TASK_INFO => sys_task_info(args[0] as *mut TaskInfo),
         SYSCALL_SPAWN => sys_spawn(args[0] as *const u8),
         SYSCALL_THREAD_CREATE => sys_thread_create(args[0], args[1]),
-        SYSCALL_GETTID => sys_gettid(),
         SYSCALL_WAITTID => sys_waittid(args[0]) as isize,
         SYSCALL_MUTEX_CREATE => sys_mutex_create(args[0] == 1),
         SYSCALL_MUTEX_LOCK => sys_mutex_lock(args[0]),
