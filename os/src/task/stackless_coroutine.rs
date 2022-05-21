@@ -1,5 +1,9 @@
 // https://blog.aloni.org/posts/a-stack-less-rust-coroutine-100-loc/
 // https://github.com/chyyuu/example-coroutine-and-thread/tree/stackless-coroutine-x86
+
+// NOTE: This module is not required to finish the lab5, though you may run
+// kernel_stackless_coroutine_test() in kernel main() to see what happens
+
 use core::future::Future;
 use core::pin::Pin;
 use core::task::{Context, Poll};

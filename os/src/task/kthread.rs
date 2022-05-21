@@ -2,6 +2,9 @@ use super::suspend_current_and_run_next;
 use crate::task::{add_task, schedule, TaskContext, TaskControlBlock};
 use alloc::sync::Arc;
 
+// NOTE: This module is not required to finish the lab5, though you may run
+// kernel_stackless_coroutine_test() in kernel main() to see what happens
+
 #[no_mangle]
 pub fn kthread_create(f: fn()) {
     println!("kthread_create");

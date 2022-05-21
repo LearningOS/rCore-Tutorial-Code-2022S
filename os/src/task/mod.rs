@@ -11,7 +11,7 @@
 
 mod context;
 mod id;
-mod kthread;
+pub mod kthread;
 mod manager;
 mod process;
 mod processor;
@@ -28,6 +28,7 @@ use crate::{
 use alloc::{sync::Arc, vec::Vec};
 pub use context::TaskContext;
 pub use id::{kstack_alloc, pid_alloc, KernelStack, PidHandle};
+pub use kthread::kernel_stackful_coroutine_test;
 use lazy_static::*;
 pub use manager::add_task;
 use manager::fetch_task;
@@ -151,6 +152,7 @@ lazy_static! {
 }
 
 pub fn add_initproc() {
-    // add_task(INITPROC.clone());
+    // INITPROC must be referenced at least once so that it can be initialized
+    // through lazy_static
     let _initproc = INITPROC.clone();
 }

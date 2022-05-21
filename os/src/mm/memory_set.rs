@@ -204,7 +204,8 @@ impl MemorySet {
                 );
             }
         }
-        // map user stack with U flags
+        // We don't map user stack and trapframe here since they will be later
+        // allocated through TaskControlBlock::new()
         let max_end_va: VirtAddr = max_end_vpn.into();
         let mut user_stack_top: usize = max_end_va.into();
         user_stack_top += PAGE_SIZE;

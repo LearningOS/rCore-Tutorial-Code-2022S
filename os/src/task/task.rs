@@ -32,6 +32,7 @@ pub struct TaskControlBlockInner {
     pub task_status: TaskStatus,
     /// It is set when active exit or execution error occurs
     pub exit_code: Option<i32>,
+    /// Tid and ustack will be deallocated when this goes None
     pub res: Option<TaskUserRes>,
 }
 

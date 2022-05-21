@@ -11,6 +11,8 @@ pub fn sys_sleep(ms: usize) -> isize {
     0
 }
 
+// HINT: you might need to maintain data structures used for deadlock detection
+//       during sys_mutex_* and sys_semaphore_* syscalls
 pub fn sys_mutex_create(blocking: bool) -> isize {
     let process = current_process();
     let mutex: Option<Arc<dyn Mutex>> = if !blocking {

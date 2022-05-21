@@ -34,13 +34,9 @@ macro_rules! println {
     }
 }
 
-/*
-以下代码提供了与颜色相关的 ANSI 转义字符，以及彩色输出可以使用的函数与宏。
-
-可以使用它们，甚至扩展它们，来提升开发体验和显示效果。
-*/
-
-// 使用 ANSI 转义字符来加上颜色
+/// 以下代码提供了与颜色相关的 ANSI 转义字符，以及彩色输出可以使用的函数与宏。
+/// 可以使用它们，甚至扩展它们，来提升开发体验和显示效果。
+/// 使用 ANSI 转义字符来加上颜色
 #[macro_export]
 macro_rules! colorize {
     ($content: ident, $foreground_color: ident) => {
@@ -66,6 +62,7 @@ pub fn print_colorized(
         .unwrap();
 }
 
+/// 带色彩的 print
 #[macro_export]
 macro_rules! print_colorized {
     ($fmt: literal, $foreground_color: expr, $background_color: expr $(, $($arg: tt)+)?) => {
@@ -73,6 +70,7 @@ macro_rules! print_colorized {
     };
 }
 
+/// 带色彩的 println
 #[macro_export]
 macro_rules! println_colorized {
     ($fmt: literal, $foreground_color: expr, $background_color: expr $(, $($arg: tt)+)?) => {
