@@ -40,6 +40,7 @@ const SYSCALL_MUTEX_LOCK: usize = 464;
 const SYSCALL_MUTEX_UNLOCK: usize = 466;
 const SYSCALL_SEMAPHORE_CREATE: usize = 467;
 const SYSCALL_SEMAPHORE_UP: usize = 468;
+const SYSCALL_ENABLE_DEADLOCK_DETECT: usize = 469;
 const SYSCALL_SEMAPHORE_DOWN: usize = 470;
 const SYSCALL_CONDVAR_CREATE: usize = 471;
 const SYSCALL_CONDVAR_SIGNAL: usize = 472;
@@ -89,6 +90,7 @@ pub fn syscall(syscall_id: usize, args: [usize; 4]) -> isize {
         SYSCALL_MUTEX_UNLOCK => sys_mutex_unlock(args[0]),
         SYSCALL_SEMAPHORE_CREATE => sys_semaphore_create(args[0]),
         SYSCALL_SEMAPHORE_UP => sys_semaphore_up(args[0]),
+        SYSCALL_ENABLE_DEADLOCK_DETECT => sys_enable_deadlock_detect(args[0]),
         SYSCALL_SEMAPHORE_DOWN => sys_semaphore_down(args[0]),
         SYSCALL_CONDVAR_CREATE => sys_condvar_create(args[0]),
         SYSCALL_CONDVAR_SIGNAL => sys_condvar_signal(args[0]),
