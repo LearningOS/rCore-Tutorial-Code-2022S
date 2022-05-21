@@ -101,7 +101,6 @@ pub fn sys_dup(fd: usize) -> isize {
     new_fd as isize
 }
 
-// YOUR JOB: 扩展 easy-fs 和内核以实现以下三个 syscall
 pub fn sys_fstat(_fd: usize, _st: *mut Stat) -> isize {
     -1
 }

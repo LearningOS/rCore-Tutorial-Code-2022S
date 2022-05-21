@@ -13,7 +13,7 @@ use core::cell::RefMut;
 pub struct TaskControlBlock {
     // immutable
     pub process: Weak<ProcessControlBlock>,
-    /// Kernel stack corresponding to PID
+    /// Kernel stack corresponding to TID
     pub kernel_stack: KernelStack,
     // mutable
     inner: UPSafeCell<TaskControlBlockInner>,
