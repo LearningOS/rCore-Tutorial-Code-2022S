@@ -142,6 +142,7 @@
 <span id="137">137</span>
 <span id="138">138</span>
 <span id="139">139</span>
+<span id="140">140</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Types related to task management &amp; Functions for completely changing TCB</span>
 
 <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::id::TaskUserRes</span>;
@@ -176,6 +177,7 @@
     <span class="kw">pub</span> <span class="ident">task_status</span>: <span class="ident">TaskStatus</span>,
     <span class="doccomment">/// It is set when active exit or execution error occurs</span>
     <span class="kw">pub</span> <span class="ident">exit_code</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// Tid and ustack will be deallocated when this goes None</span>
     <span class="kw">pub</span> <span class="ident">res</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">TaskUserRes</span><span class="op">&gt;</span>,
 }
 

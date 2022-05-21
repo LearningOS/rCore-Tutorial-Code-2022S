@@ -49,7 +49,6 @@
 <span id="44">44</span>
 <span id="45">45</span>
 <span id="46">46</span>
-<span id="47">47</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Implementation of [`TaskManager`]</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! It is only used to manage processes and schedule process based on ready queue.</span>
@@ -66,7 +65,6 @@
     <span class="ident">ready_queue</span>: <span class="ident">VecDeque</span><span class="op">&lt;</span><span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">TaskControlBlock</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 }
 
-<span class="comment">// YOUR JOB: FIFO-&gt;Stride</span>
 <span class="doccomment">/// A simple FIFO scheduler.</span>
 <span class="kw">impl</span> <span class="ident">TaskManager</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="self">Self</span> {

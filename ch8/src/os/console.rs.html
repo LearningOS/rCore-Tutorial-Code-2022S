@@ -131,8 +131,6 @@
 <span id="126">126</span>
 <span id="127">127</span>
 <span id="128">128</span>
-<span id="129">129</span>
-<span id="130">130</span>
 </pre><pre class="rust"><code><span class="doccomment">//! SBI console driver, for text output</span>
 
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::sbi::console_putchar</span>;
@@ -169,13 +167,9 @@
     }
 }
 
-<span class="comment">/*
-以下代码提供了与颜色相关的 ANSI 转义字符，以及彩色输出可以使用的函数与宏。
-
-可以使用它们，甚至扩展它们，来提升开发体验和显示效果。
-*/</span>
-
-<span class="comment">// 使用 ANSI 转义字符来加上颜色</span>
+<span class="doccomment">/// 以下代码提供了与颜色相关的 ANSI 转义字符，以及彩色输出可以使用的函数与宏。</span>
+<span class="doccomment">/// 可以使用它们，甚至扩展它们，来提升开发体验和显示效果。</span>
+<span class="doccomment">/// 使用 ANSI 转义字符来加上颜色</span>
 <span class="attribute">#[<span class="ident">macro_export</span>]</span>
 <span class="macro">macro_rules!</span> <span class="ident">colorize</span> {
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">content</span>: <span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">foreground_color</span>: <span class="ident">ident</span>) =&gt; {
@@ -201,6 +195,7 @@
         .<span class="ident">unwrap</span>();
 }
 
+<span class="doccomment">/// 带色彩的 print</span>
 <span class="attribute">#[<span class="ident">macro_export</span>]</span>
 <span class="macro">macro_rules!</span> <span class="ident">print_colorized</span> {
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">fmt</span>: <span class="ident">literal</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">foreground_color</span>: <span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">background_color</span>: <span class="ident">expr</span> $(, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">arg</span>: <span class="ident">tt</span>)<span class="op">+</span>)<span class="question-mark">?</span>) =&gt; {
@@ -208,6 +203,7 @@
     };
 }
 
+<span class="doccomment">/// 带色彩的 println</span>
 <span class="attribute">#[<span class="ident">macro_export</span>]</span>
 <span class="macro">macro_rules!</span> <span class="ident">println_colorized</span> {
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">fmt</span>: <span class="ident">literal</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">foreground_color</span>: <span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">background_color</span>: <span class="ident">expr</span> $(, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">arg</span>: <span class="ident">tt</span>)<span class="op">+</span>)<span class="question-mark">?</span>) =&gt; {

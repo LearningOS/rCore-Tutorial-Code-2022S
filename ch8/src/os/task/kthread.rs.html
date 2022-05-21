@@ -76,9 +76,15 @@
 <span id="71">71</span>
 <span id="72">72</span>
 <span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident"><span class="kw">super</span>::suspend_current_and_run_next</span>;
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::task</span>::{<span class="ident">add_task</span>, <span class="ident">schedule</span>, <span class="ident">TaskContext</span>, <span class="ident">TaskControlBlock</span>};
 <span class="kw">use</span> <span class="ident">alloc::sync::Arc</span>;
+
+<span class="comment">// NOTE: This module is not required to finish the lab5, though you may run</span>
+<span class="comment">// kernel_stackless_coroutine_test() in kernel main() to see what happens</span>
 
 <span class="attribute">#[<span class="ident">no_mangle</span>]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">kthread_create</span>(<span class="ident">f</span>: <span class="kw">fn</span>()) {

@@ -279,6 +279,7 @@
 <span id="274">274</span>
 <span id="275">275</span>
 <span id="276">276</span>
+<span id="277">277</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident"><span class="kw">super</span>::id::RecycleAllocator</span>;
 <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">add_task</span>, <span class="ident">pid_alloc</span>, <span class="ident">PidHandle</span>, <span class="ident">TaskControlBlock</span>};
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::fs</span>::{<span class="ident">File</span>, <span class="ident">Stdin</span>, <span class="ident">Stdout</span>};
@@ -298,6 +299,7 @@
     <span class="ident">inner</span>: <span class="ident">UPSafeCell</span><span class="op">&lt;</span><span class="ident">ProcessControlBlockInner</span><span class="op">&gt;</span>,
 }
 
+<span class="comment">// HINT: you may add data structures for deadlock detection here</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ProcessControlBlockInner</span> {
     <span class="kw">pub</span> <span class="ident">is_zombie</span>: <span class="ident">bool</span>,
     <span class="kw">pub</span> <span class="ident">memory_set</span>: <span class="ident">MemorySet</span>,
