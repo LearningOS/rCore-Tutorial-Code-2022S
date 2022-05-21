@@ -157,7 +157,7 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TaskControlBlock</span> {
     <span class="comment">// immutable</span>
     <span class="kw">pub</span> <span class="ident">process</span>: <span class="ident">Weak</span><span class="op">&lt;</span><span class="ident">ProcessControlBlock</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Kernel stack corresponding to PID</span>
+    <span class="doccomment">/// Kernel stack corresponding to TID</span>
     <span class="kw">pub</span> <span class="ident">kernel_stack</span>: <span class="ident">KernelStack</span>,
     <span class="comment">// mutable</span>
     <span class="ident">inner</span>: <span class="ident">UPSafeCell</span><span class="op">&lt;</span><span class="ident">TaskControlBlockInner</span><span class="op">&gt;</span>,

@@ -161,12 +161,11 @@
 <span id="156">156</span>
 <span id="157">157</span>
 <span id="158">158</span>
-<span id="159">159</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Process management syscalls</span>
 
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::config::MAX_SYSCALL_NUM</span>;
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::fs</span>::{<span class="ident">open_file</span>, <span class="ident">OpenFlags</span>};
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::mm</span>::{<span class="ident">translated_ref</span>, <span class="ident">translated_refmut</span>, <span class="ident">translated_str</span>};
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::mm</span>::{<span class="ident">translated_ref</span>, <span class="ident">translated_refmut</span>, <span class="ident">translated_str</span>, <span class="ident">PageTable</span>, <span class="ident">VirtAddr</span>};
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::task</span>::{
     <span class="ident">current_process</span>, <span class="ident">current_task</span>, <span class="ident">current_user_token</span>, <span class="ident">exit_current_and_run_next</span>,
     <span class="ident">suspend_current_and_run_next</span>, <span class="ident">TaskStatus</span>,
@@ -284,7 +283,6 @@
     <span class="comment">// ---- release current PCB lock automatically</span>
 }
 
-<span class="comment">// YOUR JOB: 引入虚地址后重写 sys_get_time</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sys_get_time</span>(<span class="ident">_ts</span>: <span class="kw-2">*mut</span> <span class="ident">TimeVal</span>, <span class="ident">_tz</span>: <span class="ident">usize</span>) -&gt; <span class="ident">isize</span> {
     <span class="kw">let</span> <span class="ident">_us</span> <span class="op">=</span> <span class="ident">get_time_us</span>();
     <span class="comment">// unsafe {</span>
@@ -293,20 +291,21 @@
     <span class="comment">//         usec: us % 1_000_000,</span>
     <span class="comment">//     };</span>
     <span class="comment">// }</span>
+    <span class="kw-2">*</span><span class="ident">translated_refmut</span>(<span class="ident">current_user_token</span>(), <span class="ident">_ts</span>) <span class="op">=</span> <span class="ident">TimeVal</span> {
+        <span class="ident">sec</span>: <span class="ident">_us</span> <span class="op">/</span> <span class="number">1_000_000</span>,
+        <span class="ident">usec</span>: <span class="ident">_us</span> <span class="op">%</span> <span class="number">1_000_000</span>,
+    };
     <span class="number">0</span>
 }
 
-<span class="comment">// YOUR JOB: 引入虚地址后重写 sys_task_info</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sys_task_info</span>(<span class="ident">ti</span>: <span class="kw-2">*mut</span> <span class="ident">TaskInfo</span>) -&gt; <span class="ident">isize</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sys_task_info</span>(<span class="ident">_ti</span>: <span class="kw-2">*mut</span> <span class="ident">TaskInfo</span>) -&gt; <span class="ident">isize</span> {
     <span class="op">-</span><span class="number">1</span>
 }
 
-<span class="comment">// YOUR JOB: 实现sys_set_priority，为任务添加优先级</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sys_set_priority</span>(<span class="ident">_prio</span>: <span class="ident">isize</span>) -&gt; <span class="ident">isize</span> {
     <span class="op">-</span><span class="number">1</span>
 }
 
-<span class="comment">// YOUR JOB: 扩展内核以实现 sys_mmap 和 sys_munmap</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sys_mmap</span>(<span class="ident">_start</span>: <span class="ident">usize</span>, <span class="ident">_len</span>: <span class="ident">usize</span>, <span class="ident">_port</span>: <span class="ident">usize</span>) -&gt; <span class="ident">isize</span> {
     <span class="op">-</span><span class="number">1</span>
 }
@@ -316,7 +315,6 @@
 }
 
 <span class="comment">//</span>
-<span class="comment">// YOUR JOB: 实现 sys_spawn 系统调用</span>
 <span class="comment">// ALERT: 注意在实现 SPAWN 时不需要复制父进程地址空间，SPAWN != FORK + EXEC</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sys_spawn</span>(<span class="ident">_path</span>: <span class="kw-2">*const</span> <span class="ident">u8</span>) -&gt; <span class="ident">isize</span> {
     <span class="op">-</span><span class="number">1</span>

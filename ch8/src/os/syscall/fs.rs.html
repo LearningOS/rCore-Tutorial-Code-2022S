@@ -117,7 +117,6 @@
 <span id="112">112</span>
 <span id="113">113</span>
 <span id="114">114</span>
-<span id="115">115</span>
 </pre><pre class="rust"><code><span class="doccomment">//! File and filesystem-related syscalls</span>
 
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::fs::make_pipe</span>;
@@ -221,7 +220,6 @@
     <span class="ident">new_fd</span> <span class="kw">as</span> <span class="ident">isize</span>
 }
 
-<span class="comment">// YOUR JOB: 扩展 easy-fs 和内核以实现以下三个 syscall</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sys_fstat</span>(<span class="ident">_fd</span>: <span class="ident">usize</span>, <span class="ident">_st</span>: <span class="kw-2">*mut</span> <span class="ident">Stat</span>) -&gt; <span class="ident">isize</span> {
     <span class="op">-</span><span class="number">1</span>
 }
