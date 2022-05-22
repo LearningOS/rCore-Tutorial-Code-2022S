@@ -280,6 +280,9 @@
 <span id="275">275</span>
 <span id="276">276</span>
 <span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident"><span class="kw">super</span>::id::RecycleAllocator</span>;
 <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">add_task</span>, <span class="ident">pid_alloc</span>, <span class="ident">PidHandle</span>, <span class="ident">TaskControlBlock</span>};
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::fs</span>::{<span class="ident">File</span>, <span class="ident">Stdin</span>, <span class="ident">Stdout</span>};
@@ -299,7 +302,7 @@
     <span class="ident">inner</span>: <span class="ident">UPSafeCell</span><span class="op">&lt;</span><span class="ident">ProcessControlBlockInner</span><span class="op">&gt;</span>,
 }
 
-<span class="comment">// HINT: you may add data structures for deadlock detection here</span>
+<span class="comment">// LAB5 HINT: you may add data structures for deadlock detection here</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ProcessControlBlockInner</span> {
     <span class="kw">pub</span> <span class="ident">is_zombie</span>: <span class="ident">bool</span>,
     <span class="kw">pub</span> <span class="ident">memory_set</span>: <span class="ident">MemorySet</span>,
@@ -351,6 +354,7 @@
         <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">exclusive_access</span>()
     }
 
+    <span class="comment">// LAB5 HINT: How to initialize deadlock data structures?</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">elf_data</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) -&gt; <span class="ident">Arc</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="comment">// memory_set with elf program headers/trampoline/trap context/user stack</span>
         <span class="kw">let</span> (<span class="ident">memory_set</span>, <span class="ident">ustack_base</span>, <span class="ident">entry_point</span>) <span class="op">=</span> <span class="ident">MemorySet::from_elf</span>(<span class="ident">elf_data</span>);
@@ -409,6 +413,7 @@
         <span class="ident">process</span>
     }
 
+    <span class="comment">// LAB5 HINT: How to initialize deadlock data structures?</span>
     <span class="doccomment">/// Load a new elf to replace the original application address space and start execution</span>
     <span class="doccomment">/// Only support processes with a single thread.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">exec</span>(<span class="self">self</span>: <span class="kw-2">&amp;</span><span class="ident">Arc</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>, <span class="ident">elf_data</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">args</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>) {
@@ -463,6 +468,7 @@
         <span class="kw-2">*</span><span class="ident">task_inner</span>.<span class="ident">get_trap_cx</span>() <span class="op">=</span> <span class="ident">trap_cx</span>;
     }
 
+    <span class="comment">// LAB5 HINT: How to initialize deadlock data structures?</span>
     <span class="doccomment">/// Fork from parent to child</span>
     <span class="doccomment">/// Only support processes with a single thread.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fork</span>(<span class="self">self</span>: <span class="kw-2">&amp;</span><span class="ident">Arc</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>) -&gt; <span class="ident">Arc</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {

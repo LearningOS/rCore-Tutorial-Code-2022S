@@ -144,6 +144,8 @@
 <span id="139">139</span>
 <span id="140">140</span>
 <span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::sync</span>::{<span class="ident">Condvar</span>, <span class="ident">Mutex</span>, <span class="ident">MutexBlocking</span>, <span class="ident">MutexSpin</span>, <span class="ident">Semaphore</span>};
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::task</span>::{<span class="ident">block_current_and_run_next</span>, <span class="ident">current_process</span>, <span class="ident">current_task</span>};
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::timer</span>::{<span class="ident">add_timer</span>, <span class="ident">get_time_ms</span>};
@@ -157,8 +159,8 @@
     <span class="number">0</span>
 }
 
-<span class="comment">// HINT: you might need to maintain data structures used for deadlock detection</span>
-<span class="comment">//       during sys_mutex_* and sys_semaphore_* syscalls</span>
+<span class="comment">// LAB5 HINT: you might need to maintain data structures used for deadlock detection</span>
+<span class="comment">// during sys_mutex_* and sys_semaphore_* syscalls</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sys_mutex_create</span>(<span class="ident">blocking</span>: <span class="ident">bool</span>) -&gt; <span class="ident">isize</span> {
     <span class="kw">let</span> <span class="ident">process</span> <span class="op">=</span> <span class="ident">current_process</span>();
     <span class="kw">let</span> <span class="ident">mutex</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Arc</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Mutex</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span> <span class="kw">if</span> <span class="op">!</span><span class="ident">blocking</span> {
@@ -182,6 +184,7 @@
     }
 }
 
+<span class="comment">// LAB5 HINT: Return -0xDEAD if deadlock is detected</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sys_mutex_lock</span>(<span class="ident">mutex_id</span>: <span class="ident">usize</span>) -&gt; <span class="ident">isize</span> {
     <span class="kw">let</span> <span class="ident">process</span> <span class="op">=</span> <span class="ident">current_process</span>();
     <span class="kw">let</span> <span class="ident">process_inner</span> <span class="op">=</span> <span class="ident">process</span>.<span class="ident">inner_exclusive_access</span>();
@@ -232,6 +235,7 @@
     <span class="number">0</span>
 }
 
+<span class="comment">// LAB5 HINT: Return -0xDEAD if deadlock is detected</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sys_semaphore_down</span>(<span class="ident">sem_id</span>: <span class="ident">usize</span>) -&gt; <span class="ident">isize</span> {
     <span class="kw">let</span> <span class="ident">process</span> <span class="op">=</span> <span class="ident">current_process</span>();
     <span class="kw">let</span> <span class="ident">process_inner</span> <span class="op">=</span> <span class="ident">process</span>.<span class="ident">inner_exclusive_access</span>();
@@ -281,7 +285,7 @@
     <span class="number">0</span>
 }
 
-<span class="comment">// YOUR JOB</span>
+<span class="comment">// LAB5 YOUR JOB: Implement deadlock detection, but might not all in this syscall</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sys_enable_deadlock_detect</span>(<span class="ident">_enabled</span>: <span class="ident">usize</span>) -&gt; <span class="ident">isize</span> {
     <span class="op">-</span><span class="number">1</span>
 }
