@@ -11,8 +11,8 @@ pub fn sys_sleep(ms: usize) -> isize {
     0
 }
 
-// HINT: you might need to maintain data structures used for deadlock detection
-//       during sys_mutex_* and sys_semaphore_* syscalls
+// LAB5 HINT: you might need to maintain data structures used for deadlock detection
+// during sys_mutex_* and sys_semaphore_* syscalls
 pub fn sys_mutex_create(blocking: bool) -> isize {
     let process = current_process();
     let mutex: Option<Arc<dyn Mutex>> = if !blocking {
@@ -36,6 +36,7 @@ pub fn sys_mutex_create(blocking: bool) -> isize {
     }
 }
 
+// LAB5 HINT: Return -0xDEAD if deadlock is detected
 pub fn sys_mutex_lock(mutex_id: usize) -> isize {
     let process = current_process();
     let process_inner = process.inner_exclusive_access();
@@ -86,6 +87,7 @@ pub fn sys_semaphore_up(sem_id: usize) -> isize {
     0
 }
 
+// LAB5 HINT: Return -0xDEAD if deadlock is detected
 pub fn sys_semaphore_down(sem_id: usize) -> isize {
     let process = current_process();
     let process_inner = process.inner_exclusive_access();
@@ -135,7 +137,7 @@ pub fn sys_condvar_wait(condvar_id: usize, mutex_id: usize) -> isize {
     0
 }
 
-// YOUR JOB
+// LAB5 YOUR JOB: Implement deadlock detection, but might not all in this syscall
 pub fn sys_enable_deadlock_detect(_enabled: usize) -> isize {
     -1
 }

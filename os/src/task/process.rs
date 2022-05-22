@@ -17,7 +17,7 @@ pub struct ProcessControlBlock {
     inner: UPSafeCell<ProcessControlBlockInner>,
 }
 
-// HINT: you may add data structures for deadlock detection here
+// LAB5 HINT: you may add data structures for deadlock detection here
 pub struct ProcessControlBlockInner {
     pub is_zombie: bool,
     pub memory_set: MemorySet,
@@ -69,6 +69,7 @@ impl ProcessControlBlock {
         self.inner.exclusive_access()
     }
 
+    // LAB5 HINT: How to initialize deadlock data structures?
     pub fn new(elf_data: &[u8]) -> Arc<Self> {
         // memory_set with elf program headers/trampoline/trap context/user stack
         let (memory_set, ustack_base, entry_point) = MemorySet::from_elf(elf_data);
@@ -127,6 +128,7 @@ impl ProcessControlBlock {
         process
     }
 
+    // LAB5 HINT: How to initialize deadlock data structures?
     /// Load a new elf to replace the original application address space and start execution
     /// Only support processes with a single thread.
     pub fn exec(self: &Arc<Self>, elf_data: &[u8], args: Vec<String>) {
@@ -181,6 +183,7 @@ impl ProcessControlBlock {
         *task_inner.get_trap_cx() = trap_cx;
     }
 
+    // LAB5 HINT: How to initialize deadlock data structures?
     /// Fork from parent to child
     /// Only support processes with a single thread.
     pub fn fork(self: &Arc<Self>) -> Arc<Self> {
